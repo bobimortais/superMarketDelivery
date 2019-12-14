@@ -9,16 +9,33 @@ import { ApiCallService } from '../api-call.service';
 
 export class SuperMarketAppComponent implements OnInit {
 
-  deliveries = [];
+  openDeliveries = [];
+  closedDeliveries = [];
+  futureDeliveries = [];
   
   constructor(private apiService: ApiCallService) { }
 
 
   ngOnInit() 
   {
-	  this.apiService.getDeliveries().subscribe((data)=>{
-      console.log(data);
-	  this.deliveries = data['deliveryList'];
+	  this.apiService.getDeliveries().subscribe((data)=>
+	  {
+		console.log(data);
+		for(var val of data['deliveryList'])
+		{
+			if(val['status'] == 'Open')
+			{
+				this.openDeliveries.push(val);
+			}
+			else if(val['status'] == 'Closed')
+			{
+				this.closedDeliveries.push(val);
+			}
+			else if(val['status'] == 'Future')
+			{
+				this.futureDeliveries.push(val);
+			}
+		}
 	  });
   }
 

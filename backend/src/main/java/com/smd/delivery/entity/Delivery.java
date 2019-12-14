@@ -13,6 +13,8 @@ public class Delivery
 
     private String customer;
 
+    private String status;
+
     public Delivery()
     {
         itemsList = new ArrayList<Item>();
@@ -61,5 +63,15 @@ public class Delivery
     public void setCustomer(String customer)
     {
         this.customer = customer;
+    }
+
+    public String getStatus()
+    {
+        return status;
+    }
+
+    public void setStatus(String status)
+    {
+        this.status = status;
     }
 }

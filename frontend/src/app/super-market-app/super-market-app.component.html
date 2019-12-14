@@ -10,7 +10,37 @@
       On going deliveries
     </mat-panel-description>
   </mat-expansion-panel-header>
-  <p>This is the primary content of the panel.</p>
+  <mat-expansion-panel *ngFor="let delivery of openDeliveries">
+		<mat-expansion-panel-header>
+			<mat-panel-title>
+				Delivery ID: {{ delivery.deliveryId }}
+			</mat-panel-title>
+			<mat-panel-description>
+				Cutomer Name: {{ delivery.customer }}
+			</mat-panel-description>
+			<mat-panel-description>
+				Total Price: {{ delivery.totalPrice }}
+			</mat-panel-description>
+			</mat-expansion-panel-header>
+			<table style="width:100%">
+			<tr>
+				<th align="left">Item Code</th>
+				<th align="left">Price</th>
+				<th align="left">Name</th>
+				<th align="left">Brand</th>
+				<th align="left">Description</th>
+				<th align="left">Weight</th>
+			</tr>
+			<tr *ngFor="let item of delivery.items">
+				<td>{{ item.itemCode }}</td>
+				<td>{{ item.price }}</td>
+				<td>{{ item.name }}</td>
+				<td>{{ item.brand }}</td>
+				<td>{{ item.description }}</td>
+				<td>{{ item.weight }}</td>
+			</tr>
+		</table>
+	</mat-expansion-panel>
 </mat-expansion-panel>
 <mat-expansion-panel>
   <mat-expansion-panel-header>
@@ -21,7 +51,37 @@
       Deliveries to be opened
     </mat-panel-description>
   </mat-expansion-panel-header>
-  <p>This is the primary content of the panel.</p>
+  <mat-expansion-panel *ngFor="let delivery of futureDeliveries">
+		<mat-expansion-panel-header>
+			<mat-panel-title>
+				Delivery ID: {{ delivery.deliveryId }}
+			</mat-panel-title>
+			<mat-panel-description>
+				Cutomer Name: {{ delivery.customer }}
+			</mat-panel-description>
+			<mat-panel-description>
+				Total Price: {{ delivery.totalPrice }}
+			</mat-panel-description>
+			</mat-expansion-panel-header>
+			<table style="width:100%">
+			<tr>
+				<th align="left">Item Code</th>
+				<th align="left">Price</th>
+				<th align="left">Name</th>
+				<th align="left">Brand</th>
+				<th align="left">Description</th>
+				<th align="left">Weight</th>
+			</tr>
+			<tr *ngFor="let item of delivery.items">
+				<td>{{ item.itemCode }}</td>
+				<td>{{ item.price }}</td>
+				<td>{{ item.name }}</td>
+				<td>{{ item.brand }}</td>
+				<td>{{ item.description }}</td>
+				<td>{{ item.weight }}</td>
+			</tr>
+		</table>
+	</mat-expansion-panel>
 </mat-expansion-panel>
 <mat-expansion-panel>
   <mat-expansion-panel-header>
@@ -32,7 +92,7 @@
       Deliveries already done
     </mat-panel-description>
   </mat-expansion-panel-header>
-	<mat-expansion-panel *ngFor="let delivery of deliveries">
+	<mat-expansion-panel *ngFor="let delivery of closedDeliveries">
 		<mat-expansion-panel-header>
 			<mat-panel-title>
 				Delivery ID: {{ delivery.deliveryId }}

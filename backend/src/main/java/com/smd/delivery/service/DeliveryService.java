@@ -24,6 +24,7 @@ public class DeliveryService
         item.setWeight(0);
         delivery.setDeliveryId(1);
         delivery.addItem(item);
+        delivery.setStatus("Open");
 
         BigDecimal bd = BigDecimal.valueOf(delivery.getItems().stream().reduce(0.0, (partialResult, i) -> partialResult + i.getPrice(), Double::sum));
         bd = bd.setScale(2, RoundingMode.HALF_UP);
@@ -48,6 +49,7 @@ public class DeliveryService
         delivery2.setDeliveryId(2);
         delivery2.addItem(item2);
         delivery2.addItem(item3);
+        delivery2.setStatus("Closed");
 
         bd = BigDecimal.valueOf(delivery2.getItems().stream().reduce(0.0, (partialResult, i) -> partialResult + i.getPrice(), Double::sum));
         bd = bd.setScale(2, RoundingMode.HALF_UP);
