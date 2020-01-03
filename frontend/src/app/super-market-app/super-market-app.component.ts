@@ -21,7 +21,7 @@ export class SuperMarketAppComponent implements OnInit {
 	  this.apiService.getDeliveries().subscribe((data)=>
 	  {
 		console.log(data);
-		for(var val of data['deliveryList'])
+		for(var val of data['deliveries'])
 		{
 			if(val['status'] == 'Open')
 			{

@@ -1,27 +1,29 @@
 package com.smd.delivery.entity;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity(name = "item")
+@Table
 public class Item
 {
-    private int itemId;
-
+    @Id
+    @Column(name = "item_code")
     private int itemCode;
 
-    private double price;
-
+    @Column(name = "item_name")
     private String name;
 
+    @Column(name = "brand")
     private String brand;
 
-    public int getItemId()
-    {
-        return itemId;
-    }
+    @Column(name = "description")
+    private String description;
 
-    public void setItemId(int itemId)
-    {
-        this.itemId = itemId;
-    }
-
+    @Column(name = "price")
+    private double price;
     public int getItemCode()
     {
         return itemCode;
@@ -30,16 +32,6 @@ public class Item
     public void setItemCode(int itemCode)
     {
         this.itemCode = itemCode;
-    }
-
-    public double getPrice()
-    {
-        return price;
-    }
-
-    public void setPrice(double price)
-    {
-        this.price = price;
     }
 
     public String getName()
@@ -72,17 +64,13 @@ public class Item
         this.description = description;
     }
 
-    public double getWeight()
+    public double getPrice()
     {
-        return weight;
+        return price;
     }
 
-    public void setWeight(double weight)
+    public void setPrice(double price)
     {
-        this.weight = weight;
+        this.price = price;
     }
-
-    private String description;
-
-    private double weight;
 }

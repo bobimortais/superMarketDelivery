@@ -1,23 +1,34 @@
 package com.smd.delivery.entity;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.smd.delivery.utils.CustomDeliverySerializer;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity(name = "delivery")
+@Table
 public class Delivery
 {
+    @Id
+    @Column(name = "delivery_id")
     private int deliveryId;
 
     private double totalPrice;
 
-    private List<Item> itemsList;
+   @OneToMany(mappedBy = "deliveryId",  fetch = FetchType.EAGER)
+    private List<DeliveryItem> itemsList;
 
+    @Column(name = "customer_id")
     private String customer;
 
+    @Column(name = "status")
+    @JsonSerialize(using = CustomDeliverySerializer.class)
     private String status;
 
     public Delivery()
     {
-        itemsList = new ArrayList<Item>();
+        itemsList = new ArrayList<DeliveryItem>();
     }
 
     public int getDeliveryId()
@@ -30,12 +41,12 @@ public class Delivery
         this.deliveryId = deliveryId;
     }
 
-    public List<Item> getItems()
+    public List<DeliveryItem> getItems()
     {
         return itemsList;
     }
 
-    public void setItems(List<Item> itemsList)
+    public void setItems(List<DeliveryItem> itemsList)
     {
         this.itemsList = itemsList;
     }
@@ -50,9 +61,9 @@ public class Delivery
         this.totalPrice = totalPrice;
     }
 
-    public void addItem(Item item)
+    public void addItem(DeliveryItem deliveryItem)
     {
-        this.itemsList.add(item);
+        this.itemsList.add(deliveryItem);
     }
 
     public String getCustomer()

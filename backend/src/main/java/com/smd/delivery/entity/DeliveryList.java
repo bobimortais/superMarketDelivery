@@ -1,10 +1,13 @@
 package com.smd.delivery.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class DeliveryList
 {
+    @JsonProperty("deliveries")
     private List<Delivery> deliveryList;
 
     public DeliveryList()
