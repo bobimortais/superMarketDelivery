@@ -2,6 +2,7 @@ package com.smd.delivery.entity;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.smd.delivery.utils.CustomDeliverySerializer;
+import org.hibernate.annotations.Formula;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,11 +17,14 @@ public class Delivery
 
     private double totalPrice;
 
-   @OneToMany(mappedBy = "deliveryId",  fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "deliveryId",  fetch = FetchType.EAGER)
     private List<DeliveryItem> itemsList;
 
     @Column(name = "customer_id")
-    private String customer;
+    private String customerId;
+
+    @Formula("(select concat(c.first_name, ' ', c.last_name) from customer c where c.customer_id = customer_id)")
+    private String customerName;
 
     @Column(name = "status")
     @JsonSerialize(using = CustomDeliverySerializer.class)
@@ -41,14 +45,24 @@ public class Delivery
         this.deliveryId = deliveryId;
     }
 
-    public List<DeliveryItem> getItems()
+    public String getCustomerId()
     {
-        return itemsList;
+        return customerId;
     }
 
-    public void setItems(List<DeliveryItem> itemsList)
+    public void setCustomerId(String customer)
     {
-        this.itemsList = itemsList;
+        this.customerId = customer;
+    }
+
+    public String getCustomerName()
+    {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName)
+    {
+        this.customerName = customerName;
     }
 
     public double getTotalPrice()
@@ -61,21 +75,6 @@ public class Delivery
         this.totalPrice = totalPrice;
     }
 
-    public void addItem(DeliveryItem deliveryItem)
-    {
-        this.itemsList.add(deliveryItem);
-    }
-
-    public String getCustomer()
-    {
-        return customer;
-    }
-
-    public void setCustomer(String customer)
-    {
-        this.customer = customer;
-    }
-
     public String getStatus()
     {
         return status;
@@ -84,5 +83,20 @@ public class Delivery
     public void setStatus(String status)
     {
         this.status = status;
+    }
+
+    public List<DeliveryItem> getItems()
+    {
+        return itemsList;
+    }
+
+    public void setItems(List<DeliveryItem> itemsList)
+    {
+        this.itemsList = itemsList;
+    }
+
+    public void addItem(DeliveryItem deliveryItem)
+    {
+        this.itemsList.add(deliveryItem);
     }
 }

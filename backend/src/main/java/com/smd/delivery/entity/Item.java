@@ -24,6 +24,7 @@ public class Item
 
     @Column(name = "price")
     private double price;
+
     public int getItemCode()
     {
         return itemCode;

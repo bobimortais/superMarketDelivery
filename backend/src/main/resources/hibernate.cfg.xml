@@ -20,5 +20,6 @@
       <mapping class="com.smd.delivery.entity.Delivery"/>
       <mapping class="com.smd.delivery.entity.DeliveryItem"/>
       <mapping class="com.smd.delivery.entity.Item"/>
+      <mapping class="com.smd.delivery.entity.Customer"/>
   </session-factory>
 </hibernate-configuration>
