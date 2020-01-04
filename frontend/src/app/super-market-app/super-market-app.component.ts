@@ -23,19 +23,17 @@ export class SuperMarketAppComponent implements OnInit {
 		console.log(data);
 		for(var val of data['deliveries'])
 		{
+			this.totalPrice(val);
 			if(val['status'] == 'Open')
 			{
-				this.totalPrice(val);
 				this.openDeliveries.push(val);
 			}
 			else if(val['status'] == 'Closed')
 			{
-				this.totalPrice(val);
 				this.closedDeliveries.push(val);
 			}
 			else if(val['status'] == 'Future')
 			{
-				this.totalPrice(val);
 				this.futureDeliveries.push(val);
 			}
 		}
