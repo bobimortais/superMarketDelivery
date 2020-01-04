@@ -9,9 +9,9 @@ import { ApiCallService } from '../api-call.service';
 
 export class SuperMarketAppComponent implements OnInit {
 
-  openDeliveries = [];
-  closedDeliveries = [];
-  futureDeliveries = [];
+  public openDeliveries = [];
+  public closedDeliveries = [];
+  public futureDeliveries = [];
   
   constructor(private apiService: ApiCallService) { }
 
@@ -42,7 +42,7 @@ export class SuperMarketAppComponent implements OnInit {
 	  });
   }
 
-	totalPrice(val)
+	private totalPrice(val)
 	{
 		val.totalPrice = val.items.map(t => t.price).reduce((a, b) => a + b, 0);
 		console.log(val.totalPrice);
