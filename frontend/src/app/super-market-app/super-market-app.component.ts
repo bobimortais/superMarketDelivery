@@ -25,18 +25,26 @@ export class SuperMarketAppComponent implements OnInit {
 		{
 			if(val['status'] == 'Open')
 			{
+				this.totalPrice(val);
 				this.openDeliveries.push(val);
 			}
 			else if(val['status'] == 'Closed')
 			{
+				this.totalPrice(val);
 				this.closedDeliveries.push(val);
 			}
 			else if(val['status'] == 'Future')
 			{
+				this.totalPrice(val);
 				this.futureDeliveries.push(val);
 			}
 		}
 	  });
   }
 
+	totalPrice(val)
+	{
+		val.totalPrice = val.items.map(t => t.price).reduce((a, b) => a + b, 0);
+		console.log(val.totalPrice);
+	}
 }
