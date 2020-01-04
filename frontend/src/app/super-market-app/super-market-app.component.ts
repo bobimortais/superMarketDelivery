@@ -44,7 +44,6 @@ export class SuperMarketAppComponent implements OnInit {
 
 	private totalPrice(val)
 	{
-		val.totalPrice = val.items.map(t => t.price).reduce((a, b) => a + b, 0);
-		console.log(val.totalPrice);
+		val.totalPrice = val.items.map(t => t.price).reduce((a, b) => a + b, 0).toFixed(2);
 	}
 }
