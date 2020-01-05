@@ -3,13 +3,9 @@ package com.smd.delivery.controller;
 import com.smd.delivery.entity.DeliveryList;
 import com.smd.delivery.service.DeliveryService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class DeliveryController
@@ -28,4 +24,33 @@ public class DeliveryController
     {
         return new ResponseEntity<>(deliveryService.getDeliveries(), HttpStatus.OK);
     }
+
+    @CrossOrigin
+    @PostMapping("/createDelivery")
+    public ResponseEntity<String> createDelivery()
+    {
+        return new ResponseEntity<>("Create delivery URL", HttpStatus.OK);
+    }
+
+    @CrossOrigin
+    @PutMapping("/addItemToDelivery")
+    public ResponseEntity<String> addItemToDelivery()
+    {
+        return new ResponseEntity<>("Add item to delivery URL", HttpStatus.OK);
+    }
+
+    @CrossOrigin
+    @PutMapping("/removeItemFromDelivery")
+    public ResponseEntity<String> removeItemFromDelivery()
+    {
+        return new ResponseEntity<>("Remove item from delivery URL", HttpStatus.OK);
+    }
+
+    @CrossOrigin
+    @DeleteMapping("/cancelDelivery")
+    public ResponseEntity<String> cancelDelivery()
+    {
+        return new ResponseEntity<>("Cancel delivery URL", HttpStatus.OK);
+    }
 }
+
