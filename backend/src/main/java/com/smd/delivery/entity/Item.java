@@ -1,15 +1,13 @@
 package com.smd.delivery.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity(name = "item")
 @Table
 public class Item
 {
     @Id
+    @GeneratedValue
     @Column(name = "item_code")
     private int itemCode;
 

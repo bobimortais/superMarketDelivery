@@ -1,15 +1,13 @@
 package com.smd.delivery.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity(name = "customer")
 @Table
 public class Customer
 {
     @Id
+    @GeneratedValue
     @Column(name = "customer_id")
     private int customerId;
 

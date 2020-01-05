@@ -103,4 +103,31 @@ public class DBAcessService
 
 		return deliveryItems;
 	}
+
+	public int createDelivery(int customerID)
+	{
+		Transaction tx = null;
+		Session session = getHibernateSession();
+		Delivery delivery = new Delivery();
+
+		try
+		{
+			tx = session.beginTransaction();
+			delivery.setStatus("o");
+			delivery.setCustomerId(customerID);
+			session.save(delivery);
+			tx.commit();
+		}
+		catch (HibernateException e)
+		{
+			if (tx != null)
+				tx.rollback();
+			e.printStackTrace();
+		}
+		finally
+		{
+			session.close();
+		}
+		return delivery.getDeliveryId();
+	}
 }

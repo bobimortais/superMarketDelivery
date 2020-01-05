@@ -1,5 +1,6 @@
 package com.smd.delivery.controller;
 
+import com.google.gson.JsonObject;
 import com.smd.delivery.entity.DeliveryList;
 import com.smd.delivery.service.DeliveryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,9 +27,10 @@ public class DeliveryController
     }
 
     @CrossOrigin
-    @PostMapping("/createDelivery")
-    public ResponseEntity<String> createDelivery()
+    @PostMapping(value = "/createDelivery", consumes = {"application/json"})
+    public ResponseEntity<String> createDelivery(@RequestBody(required = true) String requestDelivery)
     {
+        deliveryService.createDelivery(requestDelivery);
         return new ResponseEntity<>("Create delivery URL", HttpStatus.OK);
     }
 

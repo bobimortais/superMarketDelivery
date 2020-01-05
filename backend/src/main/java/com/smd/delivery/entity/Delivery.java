@@ -12,6 +12,7 @@ import java.util.List;
 public class Delivery
 {
     @Id
+    @GeneratedValue
     @Column(name = "delivery_id")
     private int deliveryId;
 
@@ -21,7 +22,7 @@ public class Delivery
     private List<DeliveryItem> itemsList;
 
     @Column(name = "customer_id")
-    private String customerId;
+    private int customerId;
 
     @Formula("(select concat(c.first_name, ' ', c.last_name) from customer c where c.customer_id = customer_id)")
     private String customerName;
@@ -45,12 +46,12 @@ public class Delivery
         this.deliveryId = deliveryId;
     }
 
-    public String getCustomerId()
+    public int getCustomerId()
     {
         return customerId;
     }
 
-    public void setCustomerId(String customer)
+    public void setCustomerId(int customer)
     {
         this.customerId = customer;
     }
