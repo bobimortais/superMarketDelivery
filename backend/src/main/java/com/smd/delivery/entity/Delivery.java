@@ -2,6 +2,7 @@ package com.smd.delivery.entity;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.smd.delivery.utils.CustomDeliverySerializer;
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.Formula;
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -18,7 +19,7 @@ public class Delivery
 
     private double totalPrice;
 
-    @OneToMany(mappedBy = "deliveryId",  fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "deliveryId",  fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     private List<DeliveryItem> itemsList;
 
     @Column(name = "customer_id")

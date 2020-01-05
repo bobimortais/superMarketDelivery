@@ -1,6 +1,7 @@
 package com.smd.delivery.controller;
 
 import com.google.gson.JsonObject;
+import com.smd.delivery.db.DBAcessService;
 import com.smd.delivery.entity.DeliveryList;
 import com.smd.delivery.service.DeliveryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,8 +51,9 @@ public class DeliveryController
 
     @CrossOrigin
     @DeleteMapping("/cancelDelivery")
-    public ResponseEntity<String> cancelDelivery()
+    public ResponseEntity<String> cancelDelivery(@RequestParam(value="deliveryId", required = true) int deliveryId)
     {
+        DBAcessService.geInstance().deleteDelivery(deliveryId);
         return new ResponseEntity<>("Cancel delivery URL", HttpStatus.OK);
     }
 }

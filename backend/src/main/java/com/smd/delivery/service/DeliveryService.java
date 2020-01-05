@@ -26,4 +26,11 @@ public class DeliveryService
         String status = "OK";
         return status;
     }
+
+    public String deleteDelivery(int deliveryId)
+    {
+        DBAcessService.geInstance().createDelivery(deliveryId);
+        String status = "OK";
+        return status;
+    }
 }

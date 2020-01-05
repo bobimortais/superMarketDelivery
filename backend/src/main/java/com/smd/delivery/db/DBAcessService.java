@@ -12,13 +12,16 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
 
 public class DBAcessService 
 {
 
 	private static SessionFactory factory; 
 	
-	private static DBAcessService instance; 
+	private static DBAcessService instance;
 	
 	public static DBAcessService geInstance()
 	{
@@ -129,5 +132,33 @@ public class DBAcessService
 			session.close();
 		}
 		return delivery.getDeliveryId();
+	}
+
+	public String deleteDelivery(int deliveryId)
+	{
+		Transaction tx = null;
+		Session session = getHibernateSession();
+		Delivery delivery = new Delivery();
+
+		try
+		{
+			tx = session.beginTransaction();
+			delivery.setDeliveryId(deliveryId);
+			session.delete(delivery);
+			tx.commit();
+		}
+		catch (HibernateException e)
+		{
+			if (tx != null)
+				tx.rollback();
+			e.printStackTrace();
+		}
+		finally
+		{
+			session.close();
+		}
+
+		String status = "OK";
+		return status;
 	}
 }
