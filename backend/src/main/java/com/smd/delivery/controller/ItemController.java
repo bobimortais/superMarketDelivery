@@ -45,8 +45,8 @@ public class ItemController
     @PutMapping(value = "/updateItem", consumes = {"application/json"})
     public ResponseEntity<String> updateItem(@RequestBody(required = true) String requestItem)
     {
-        itemService.updateItem(requestItem);
-        return new ResponseEntity<>("Update item URL", HttpStatus.OK);
+        int itemCode = itemService.updateItem(requestItem);
+        return new ResponseEntity<>("Update " + itemCode + " updated.", HttpStatus.OK);
     }
 
     @CrossOrigin

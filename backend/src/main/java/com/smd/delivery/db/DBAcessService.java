@@ -314,4 +314,34 @@ public class DBAcessService
         }
         return item.getItemCode();
     }
+
+    public int updateItem(int itemCode, String brand, String name, String description, double price)
+    {
+        Transaction tx = null;
+        Session session = getHibernateSession();
+        Item item = new Item();
+
+        try
+        {
+            tx = session.beginTransaction();
+            item.setItemCode(itemCode);
+            item.setName(name);
+            item.setBrand(brand);
+            item.setDescription(description);
+            item.setPrice(price);
+            session.update(item);
+            tx.commit();
+        }
+        catch (HibernateException e)
+        {
+            if (tx != null)
+                tx.rollback();
+            e.printStackTrace();
+        }
+        finally
+        {
+            session.close();
+        }
+        return item.getItemCode();
+    }
 }

@@ -35,7 +35,7 @@ public class ItemService
         return itemCode;
     }
 
-    public String updateItem(String requestItem)
+    public int updateItem(String requestItem)
     {
         JsonObject itemInfo = JsonParser.parseString(requestItem).getAsJsonObject();
         int itemCode = itemInfo.get("itemCode").getAsInt();
@@ -44,7 +44,8 @@ public class ItemService
         String description = itemInfo.get("description").getAsString();
         double price = itemInfo.get("price").getAsDouble();
         String status = "OK";
-        return status;
+        DBAcessService.geInstance().updateItem(itemCode, brand, itemName, description, price);
+        return itemCode;
     }
 
     public String deleteItem(int itemCode)
