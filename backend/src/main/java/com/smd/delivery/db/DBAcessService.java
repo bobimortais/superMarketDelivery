@@ -372,4 +372,85 @@ public class DBAcessService
 
         return customerList;
     }
+
+    public Customer getCustomerById(int customerID)
+    {
+        Session session = getHibernateSession();
+        Customer customer = null;
+
+        try
+        {
+            customer = (Customer) session.get(Customer.class, customerID);
+        }
+        catch (HibernateException e)
+        {
+            e.printStackTrace();
+        }
+        finally
+        {
+            session.close();
+        }
+        return customer;
+    }
+
+    public int createCustomer(String firstName, String lastName, String cpf, String sex, String phone)
+    {
+        Transaction tx = null;
+        Session session = getHibernateSession();
+        Customer customer = new Customer();
+
+        try
+        {
+            tx = session.beginTransaction();
+            customer.setFirstName(firstName);
+            customer.setLastName(lastName);
+            customer.setCpf(cpf);
+            customer.setSex(sex.charAt(0));
+            customer.setPhone(phone);
+            session.save(customer);
+            tx.commit();
+        }
+        catch (HibernateException e)
+        {
+            if (tx != null)
+                tx.rollback();
+            e.printStackTrace();
+        }
+        finally
+        {
+            session.close();
+        }
+        return customer.getCustomerId();
+    }
+
+    public int updateCustomer(int customerId, String firstName, String lastName, String cpf, String sex, String phone)
+    {
+        Transaction tx = null;
+        Session session = getHibernateSession();
+        Customer customer = new Customer();
+
+        try
+        {
+            tx = session.beginTransaction();
+            customer.setCustomerId(customerId);
+            customer.setFirstName(firstName);
+            customer.setLastName(lastName);
+            customer.setCpf(cpf);
+            customer.setSex(sex.charAt(0));
+            customer.setPhone(phone);
+            session.update(customer);
+            tx.commit();
+        }
+        catch (HibernateException e)
+        {
+            if (tx != null)
+                tx.rollback();
+            e.printStackTrace();
+        }
+        finally
+        {
+            session.close();
+        }
+        return customer.getCustomerId();
+    }
 }

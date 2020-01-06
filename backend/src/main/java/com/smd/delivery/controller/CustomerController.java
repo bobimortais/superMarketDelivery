@@ -1,5 +1,6 @@
 package com.smd.delivery.controller;
 
+import com.smd.delivery.entity.Customer;
 import com.smd.delivery.entity.CustomerList;
 import com.smd.delivery.service.CustomerService;
 import com.smd.delivery.service.ItemService;
@@ -27,17 +28,26 @@ public class CustomerController
     }
 
     @CrossOrigin
-    @PostMapping("/createCustomer")
-    public ResponseEntity<String> createCustomer()
+    @GetMapping("/getCustomers/{customerId}")
+    public ResponseEntity<Customer> getCustomerById(@PathVariable(value="customerId") int customerId)
     {
-        return new ResponseEntity<>("Create customer URL", HttpStatus.OK);
+        return new ResponseEntity<>(customerService.getCustomerById(customerId), HttpStatus.OK);
+    }
+
+    @CrossOrigin
+    @PostMapping("/createCustomer")
+    public ResponseEntity<String> createCustomer(@RequestBody(required = true) String requestCustomer)
+    {
+        int customerId = customerService.createCustomer(requestCustomer);
+        return new ResponseEntity<>("Customer " + customerId + " created.", HttpStatus.OK);
     }
 
     @CrossOrigin
     @PutMapping("/updateCustomer")
-    public ResponseEntity<String> updateCustomer()
+    public ResponseEntity<String> updateCustomer(@RequestBody(required = true) String requestCustomer)
     {
-        return new ResponseEntity<>("Update customer URL", HttpStatus.OK);
+        int customerId = customerService.updateCustomer(requestCustomer);
+        return new ResponseEntity<>("Customer " + customerId + " updated.", HttpStatus.OK);
     }
 
     @CrossOrigin
