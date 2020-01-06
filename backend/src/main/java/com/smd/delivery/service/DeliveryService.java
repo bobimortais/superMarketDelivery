@@ -1,6 +1,5 @@
 package com.smd.delivery.service;
 
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.smd.delivery.db.DBAcessService;
@@ -29,7 +28,24 @@ public class DeliveryService
 
     public String deleteDelivery(int deliveryId)
     {
-        DBAcessService.geInstance().createDelivery(deliveryId);
+        DBAcessService.geInstance().deleteDelivery(deliveryId);
+        String status = "OK";
+        return status;
+    }
+
+    public String addItemToDelivery(String itemToAddInfo)
+    {
+        JsonObject itemInfo = JsonParser.parseString(itemToAddInfo).getAsJsonObject();
+        int itemCode = itemInfo.get("itemCode").getAsInt();
+        int deliveryId = itemInfo.get("deliveryId").getAsInt();
+        DBAcessService.geInstance().addItemToDelivery(itemCode, deliveryId);
+        String status = "OK";
+        return status;
+    }
+
+    public String removeItemFromDelivery(int itemId)
+    {
+        DBAcessService.geInstance().removeItemFromDelivery(itemId);
         String status = "OK";
         return status;
     }

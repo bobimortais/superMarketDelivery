@@ -101,4 +101,14 @@ public class DeliveryItem
     {
         this.itemId = itemId;
     }
+
+    public int getDeliveryId()
+    {
+        return deliveryId;
+    }
+
+    public void setDeliveryId(int deliveryId)
+    {
+        this.deliveryId = deliveryId;
+    }
 }

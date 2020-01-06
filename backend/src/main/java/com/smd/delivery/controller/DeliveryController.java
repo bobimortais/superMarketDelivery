@@ -1,7 +1,5 @@
 package com.smd.delivery.controller;
 
-import com.google.gson.JsonObject;
-import com.smd.delivery.db.DBAcessService;
 import com.smd.delivery.entity.DeliveryList;
 import com.smd.delivery.service.DeliveryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,24 +34,26 @@ public class DeliveryController
     }
 
     @CrossOrigin
-    @PutMapping("/addItemToDelivery")
-    public ResponseEntity<String> addItemToDelivery()
+    @PutMapping(value = "/addItemToDelivery", consumes = {"application/json"})
+    public ResponseEntity<String> addItemToDelivery(@RequestBody(required = true) String itemToAddInfo)
     {
+        deliveryService.addItemToDelivery(itemToAddInfo);
         return new ResponseEntity<>("Add item to delivery URL", HttpStatus.OK);
     }
 
     @CrossOrigin
-    @PutMapping("/removeItemFromDelivery")
-    public ResponseEntity<String> removeItemFromDelivery()
+    @DeleteMapping(value = "/removeItemFromDelivery")
+    public ResponseEntity<String> removeItemFromDelivery(@RequestParam(value="itemId", required = true) int itemId)
     {
+        deliveryService.removeItemFromDelivery(itemId);
         return new ResponseEntity<>("Remove item from delivery URL", HttpStatus.OK);
     }
 
     @CrossOrigin
-    @DeleteMapping("/cancelDelivery")
+    @DeleteMapping(value = "/cancelDelivery")
     public ResponseEntity<String> cancelDelivery(@RequestParam(value="deliveryId", required = true) int deliveryId)
     {
-        DBAcessService.geInstance().deleteDelivery(deliveryId);
+        deliveryService.deleteDelivery(deliveryId);
         return new ResponseEntity<>("Cancel delivery URL", HttpStatus.OK);
     }
 }

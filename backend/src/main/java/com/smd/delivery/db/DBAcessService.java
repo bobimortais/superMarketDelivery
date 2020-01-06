@@ -161,4 +161,59 @@ public class DBAcessService
 		String status = "OK";
 		return status;
 	}
+
+	public int addItemToDelivery(int itemCode, int deliveryId)
+	{
+		Transaction tx = null;
+		Session session = getHibernateSession();
+		DeliveryItem deliveryItem = new DeliveryItem();
+
+		try
+		{
+			tx = session.beginTransaction();
+			deliveryItem.setItemCode(itemCode);
+			deliveryItem.setDeliveryId(deliveryId);
+			session.save(deliveryItem);
+			tx.commit();
+		}
+		catch (HibernateException e)
+		{
+			if (tx != null)
+				tx.rollback();
+			e.printStackTrace();
+		}
+		finally
+		{
+			session.close();
+		}
+		return deliveryItem.getDeliveryId();
+	}
+
+	public String removeItemFromDelivery(int itemId)
+	{
+		Transaction tx = null;
+		Session session = getHibernateSession();
+		DeliveryItem deliveryItem = new DeliveryItem();
+
+		try
+		{
+			tx = session.beginTransaction();
+			deliveryItem.setItemId(itemId);
+			session.delete(deliveryItem);
+			tx.commit();
+		}
+		catch (HibernateException e)
+		{
+			if (tx != null)
+				tx.rollback();
+			e.printStackTrace();
+		}
+		finally
+		{
+			session.close();
+		}
+
+		String status = "OK";
+		return status;
+	}
 }
