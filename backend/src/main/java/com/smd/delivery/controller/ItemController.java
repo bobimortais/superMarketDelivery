@@ -45,13 +45,15 @@ public class ItemController
     @PutMapping(value = "/updateItem", consumes = {"application/json"})
     public ResponseEntity<String> updateItem(@RequestBody(required = true) String requestItem)
     {
+        itemService.updateItem(requestItem);
         return new ResponseEntity<>("Update item URL", HttpStatus.OK);
     }
 
     @CrossOrigin
     @DeleteMapping(value = "/deleteItem")
-    public ResponseEntity<String> deleteItem()
+    public ResponseEntity<String> deleteItem(@RequestParam(value="itemCode", required = true) int itemCode)
     {
+        itemService.deleteItem(itemCode);
         return new ResponseEntity<>("Delete item URL", HttpStatus.OK);
     }
 }

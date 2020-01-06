@@ -39,6 +39,10 @@ public class ItemService
     {
         JsonObject itemInfo = JsonParser.parseString(requestItem).getAsJsonObject();
         int itemCode = itemInfo.get("itemCode").getAsInt();
+        String brand = itemInfo.get("brand").getAsString();
+        String itemName = itemInfo.get("name").getAsString();
+        String description = itemInfo.get("description").getAsString();
+        double price = itemInfo.get("price").getAsDouble();
         String status = "OK";
         return status;
     }
