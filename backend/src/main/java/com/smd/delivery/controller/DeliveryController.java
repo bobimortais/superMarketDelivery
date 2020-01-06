@@ -1,5 +1,6 @@
 package com.smd.delivery.controller;
 
+import com.smd.delivery.entity.Delivery;
 import com.smd.delivery.entity.DeliveryList;
 import com.smd.delivery.service.DeliveryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,13 @@ public class DeliveryController
     public ResponseEntity<DeliveryList> getDeliveries()
     {
         return new ResponseEntity<>(deliveryService.getDeliveries(), HttpStatus.OK);
+    }
+
+    @CrossOrigin
+    @GetMapping("/getDeliveries/{deliveryId}")
+    public ResponseEntity<Delivery> getDelivery(@PathVariable(value="deliveryId") int deliveryId)
+    {
+        return new ResponseEntity<>(deliveryService.getDeliveryById(deliveryId), HttpStatus.OK);
     }
 
     @CrossOrigin

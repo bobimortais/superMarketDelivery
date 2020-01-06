@@ -81,6 +81,26 @@ public class DBAcessService
 		return deliveryList;
 	}
 
+	public Delivery getDeliveryById(int deliveryId)
+	{
+		Session session = getHibernateSession();
+		Delivery delivery = null;
+
+		try
+		{
+			delivery = (Delivery) session.get(Delivery.class, deliveryId);
+		}
+		catch (HibernateException e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			session.close();
+		}
+		return delivery;
+	}
+
 	public List<DeliveryItem> getItemByDelivery(int deliveryId)
 	{
 		Transaction tx = null;
