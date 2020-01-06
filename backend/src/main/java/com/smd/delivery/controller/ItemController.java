@@ -1,5 +1,6 @@
 package com.smd.delivery.controller;
 
+import com.smd.delivery.entity.Item;
 import com.smd.delivery.entity.ItemList;
 import com.smd.delivery.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,13 @@ public class ItemController
     public ResponseEntity<ItemList> getItems()
     {
         return new ResponseEntity<>(itemService.getItems(), HttpStatus.OK);
+    }
+
+    @CrossOrigin
+    @GetMapping("/getItems/{itemCode}")
+    public ResponseEntity<Item> getItems(@PathVariable(value="itemCode") int itemCode)
+    {
+        return new ResponseEntity<>(itemService.getItemByCode(itemCode), HttpStatus.OK);
     }
 
     @CrossOrigin
