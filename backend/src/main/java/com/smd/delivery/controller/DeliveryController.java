@@ -42,7 +42,7 @@ public class DeliveryController
     }
 
     @CrossOrigin
-    @PutMapping(value = "/addItemToDelivery", consumes = {"application/json"})
+    @PostMapping(value = "/addItemToDelivery", consumes = {"application/json"})
     public ResponseEntity<String> addItemToDelivery(@RequestBody(required = true) String itemToAddInfo)
     {
         deliveryService.addItemToDelivery(itemToAddInfo);

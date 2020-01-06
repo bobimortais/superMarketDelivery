@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import com.smd.delivery.entity.Delivery;
 import com.smd.delivery.entity.DeliveryItem;
+import com.smd.delivery.entity.Item;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -99,32 +100,6 @@ public class DBAcessService
 			session.close();
 		}
 		return delivery;
-	}
-
-	public List<DeliveryItem> getItemByDelivery(int deliveryId)
-	{
-		Transaction tx = null;
-		List<DeliveryItem> deliveryItems = new ArrayList<DeliveryItem>();
-		Session session = getHibernateSession();
-
-		try
-		{
-			tx = session.beginTransaction();
-			deliveryItems = session.createQuery("FROM delivery_item where delivery_id = " + deliveryId).list();
-			tx.commit();
-		}
-		catch (HibernateException e)
-		{
-			if (tx != null)
-				tx.rollback();
-			e.printStackTrace();
-		}
-		finally
-		{
-			session.close();
-		}
-
-		return deliveryItems;
 	}
 
 	public int createDelivery(int customerID)
@@ -236,4 +211,78 @@ public class DBAcessService
 		String status = "OK";
 		return status;
 	}
+
+    public List<Item> getAllItems()
+    {
+        Transaction tx = null;
+        List<Item> itemList = new ArrayList<Item>();
+        Session session = getHibernateSession();
+
+        try
+        {
+            tx = session.beginTransaction();
+            itemList = session.createQuery("FROM item").list();
+            tx.commit();
+        }
+        catch (HibernateException e)
+        {
+            if (tx != null)
+                tx.rollback();
+            e.printStackTrace();
+        }
+        finally
+        {
+            session.close();
+        }
+
+        return itemList;
+    }
+
+    public Item getItemByCode(int itemCode)
+    {
+        Session session = getHibernateSession();
+        Item item = null;
+
+        try
+        {
+            item = (Item) session.get(Item.class, itemCode);
+        }
+        catch (HibernateException e)
+        {
+            e.printStackTrace();
+        }
+        finally
+        {
+            session.close();
+        }
+        return item;
+    }
+
+    public String deleteItem(int itemCode)
+    {
+        Transaction tx = null;
+        Session session = getHibernateSession();
+        Item item = new Item();
+
+        try
+        {
+            tx = session.beginTransaction();
+            item.setItemCode(itemCode);
+            session.delete(item);
+            tx.commit();
+        }
+        catch (HibernateException e)
+        {
+            if (tx != null)
+                tx.rollback();
+            e.printStackTrace();
+        }
+        finally
+        {
+            session.close();
+        }
+
+        String status = "OK";
+        return status;
+    }
 }

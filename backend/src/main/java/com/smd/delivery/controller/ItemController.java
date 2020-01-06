@@ -1,5 +1,8 @@
 package com.smd.delivery.controller;
 
+import com.smd.delivery.entity.ItemList;
+import com.smd.delivery.service.ItemService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -7,11 +10,19 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class ItemController
 {
+    private ItemService itemService;
+
+    @Autowired
+    public ItemController(ItemService itemService)
+    {
+        this.itemService = itemService;
+    }
+
     @CrossOrigin
     @GetMapping("/getItems")
-    public ResponseEntity<String> getItems()
+    public ResponseEntity<ItemList> getItems()
     {
-        return new ResponseEntity<>("Get items URL", HttpStatus.OK);
+        return new ResponseEntity<>(itemService.getItems(), HttpStatus.OK);
     }
 
     @CrossOrigin
