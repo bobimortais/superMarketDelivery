@@ -37,8 +37,8 @@ public class DeliveryController
     @PostMapping(value = "/createDelivery", consumes = {"application/json"})
     public ResponseEntity<String> createDelivery(@RequestBody(required = true) String requestDelivery)
     {
-        deliveryService.createDelivery(requestDelivery);
-        return new ResponseEntity<>("Create delivery URL", HttpStatus.OK);
+        int deliveryId = deliveryService.createDelivery(requestDelivery);
+        return new ResponseEntity<>("Delivery " + deliveryId + " created.", HttpStatus.OK);
     }
 
     @CrossOrigin

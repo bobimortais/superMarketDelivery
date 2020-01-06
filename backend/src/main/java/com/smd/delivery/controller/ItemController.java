@@ -34,21 +34,22 @@ public class ItemController
     }
 
     @CrossOrigin
-    @PostMapping("/createItem")
-    public ResponseEntity<String> createItem()
+    @PostMapping(value = "/createItem", consumes = {"application/json"})
+    public ResponseEntity<String> createItem(@RequestBody(required = true) String requestItem)
     {
-        return new ResponseEntity<>("Create item URL", HttpStatus.OK);
+        int itemCode = itemService.createItem(requestItem);
+        return new ResponseEntity<>("Item " + itemCode + " created.", HttpStatus.OK);
     }
 
     @CrossOrigin
-    @PutMapping("/updateItem")
-    public ResponseEntity<String> updateItem()
+    @PutMapping(value = "/updateItem", consumes = {"application/json"})
+    public ResponseEntity<String> updateItem(@RequestBody(required = true) String requestItem)
     {
         return new ResponseEntity<>("Update item URL", HttpStatus.OK);
     }
 
     @CrossOrigin
-    @DeleteMapping("/deleteItem")
+    @DeleteMapping(value = "/deleteItem")
     public ResponseEntity<String> deleteItem()
     {
         return new ResponseEntity<>("Delete item URL", HttpStatus.OK);

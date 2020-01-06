@@ -17,7 +17,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 
-public class DBAcessService 
+public class DBAcessService
 {
 
 	private static SessionFactory factory; 
@@ -284,5 +284,34 @@ public class DBAcessService
 
         String status = "OK";
         return status;
+    }
+
+    public int createItem(String brand, String name, String description, double price)
+    {
+        Transaction tx = null;
+        Session session = getHibernateSession();
+        Item item = new Item();
+
+        try
+        {
+            tx = session.beginTransaction();
+            item.setName(name);
+            item.setBrand(brand);
+            item.setDescription(description);
+            item.setPrice(price);
+            session.save(item);
+            tx.commit();
+        }
+        catch (HibernateException e)
+        {
+            if (tx != null)
+                tx.rollback();
+            e.printStackTrace();
+        }
+        finally
+        {
+            session.close();
+        }
+        return item.getItemCode();
     }
 }

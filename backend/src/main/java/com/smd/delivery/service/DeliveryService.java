@@ -22,14 +22,12 @@ public class DeliveryService
         return DBAcessService.geInstance().getDeliveryById(deliveryId);
     }
 
-    public String createDelivery(String requestDelivery)
+    public int createDelivery(String requestDelivery)
     {
         JsonObject customerInfo = JsonParser.parseString(requestDelivery).getAsJsonObject();
         int customerID = customerInfo.get("customerID").getAsInt();
         int deliveryID = DBAcessService.geInstance().createDelivery(customerID);
-        System.out.println(deliveryID);
-        String status = "OK";
-        return status;
+        return deliveryID;
     }
 
     public String deleteDelivery(int deliveryId)

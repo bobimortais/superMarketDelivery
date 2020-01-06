@@ -24,12 +24,15 @@ public class ItemService
         return DBAcessService.geInstance().getItemByCode(itemCode);
     }
 
-    public String createItem(String requestItem)
+    public int createItem(String requestItem)
     {
         JsonObject itemInfo = JsonParser.parseString(requestItem).getAsJsonObject();
-        int itemCode = itemInfo.get("itemCode").getAsInt();
-        String status = "OK";
-        return status;
+        String brand = itemInfo.get("brand").getAsString();
+        String itemName = itemInfo.get("name").getAsString();
+        String description = itemInfo.get("description").getAsString();
+        double price = itemInfo.get("price").getAsDouble();
+        int itemCode = DBAcessService.geInstance().createItem(brand, itemName, description, price);
+        return itemCode;
     }
 
     public String updateItem(String requestItem)
