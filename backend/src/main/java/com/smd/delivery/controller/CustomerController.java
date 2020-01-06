@@ -1,5 +1,6 @@
 package com.smd.delivery.controller;
 
+import com.smd.delivery.db.DBAcessService;
 import com.smd.delivery.entity.Customer;
 import com.smd.delivery.entity.CustomerList;
 import com.smd.delivery.service.CustomerService;
@@ -52,8 +53,9 @@ public class CustomerController
 
     @CrossOrigin
     @DeleteMapping("/deleteCustomer")
-    public ResponseEntity<String> deleteCustomer()
+    public ResponseEntity<String> deleteCustomer(@RequestParam(value="customerId", required = true) int customerId)
     {
+        customerService.deleteCustomer(customerId);
         return new ResponseEntity<>("Delete customer URL", HttpStatus.OK);
     }
 }

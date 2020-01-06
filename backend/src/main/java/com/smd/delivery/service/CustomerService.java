@@ -48,4 +48,11 @@ public class CustomerService
         DBAcessService.geInstance().updateCustomer(customerId, firstName, lastName, cpf, sex, phone);
         return customerId;
     }
+
+    public String deleteCustomer(int customerId)
+    {
+        DBAcessService.geInstance().deleteItem(customerId);
+        String status = "OK";
+        return status;
+    }
 }

@@ -260,17 +260,17 @@ public class DBAcessService
         return item;
     }
 
-    public String deleteItem(int itemCode)
+    public String deleteItem(int customerId)
     {
         Transaction tx = null;
         Session session = getHibernateSession();
-        Item item = new Item();
+        Customer customer = new Customer();
 
         try
         {
             tx = session.beginTransaction();
-            item.setItemCode(itemCode);
-            session.delete(item);
+            customer.setCustomerId(customerId);
+            session.delete(customer);
             tx.commit();
         }
         catch (HibernateException e)
