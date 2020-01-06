@@ -2,6 +2,8 @@ package com.smd.delivery.db;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.smd.delivery.entity.Customer;
 import com.smd.delivery.entity.Delivery;
 import com.smd.delivery.entity.DeliveryItem;
 import com.smd.delivery.entity.Item;
@@ -343,5 +345,31 @@ public class DBAcessService
             session.close();
         }
         return item.getItemCode();
+    }
+
+    public List<Customer> getAllCustomers()
+    {
+        Transaction tx = null;
+        List<Customer> customerList = new ArrayList<>();
+        Session session = getHibernateSession();
+
+        try
+        {
+            tx = session.beginTransaction();
+            customerList = session.createQuery("FROM customer").list();
+            tx.commit();
+        }
+        catch (HibernateException e)
+        {
+            if (tx != null)
+                tx.rollback();
+            e.printStackTrace();
+        }
+        finally
+        {
+            session.close();
+        }
+
+        return customerList;
     }
 }
