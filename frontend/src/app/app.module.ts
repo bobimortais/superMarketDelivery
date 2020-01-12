@@ -8,12 +8,14 @@ import { HttpClientModule } from '@angular/common/http';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatIconModule} from '@angular/material/icon';
-import { MdIconModule } from 
+import { MatButtonModule, MatDialogModule } from '@angular/material';
+import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    SuperMarketAppComponent
+    SuperMarketAppComponent,
+    ConfirmDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -23,9 +25,12 @@ import { MdIconModule } from
   HttpClientModule,
   MatCheckboxModule,
   MatToolbarModule,
-  MatIconModule
+  MatIconModule,
+  MatButtonModule,
+  MatDialogModule
   ],
   providers: [],
+  entryComponents: [ConfirmDialogComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

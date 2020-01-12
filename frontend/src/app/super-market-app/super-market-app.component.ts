@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiCallService } from '../api-call.service';
+import { MatDialog } from '@angular/material';
+import { ConfirmDialogModel, ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-super-market-app',
@@ -11,9 +13,10 @@ export class SuperMarketAppComponent implements OnInit {
 
   public openDeliveries = [];
   public closedDeliveries = [];
-  public futureDeliveries = [];
+	public futureDeliveries = [];
+	result: string = '';
   
-  constructor(private apiService: ApiCallService) { }
+  constructor(private apiService: ApiCallService, public dialog: MatDialog) { }
 
 	checked = false;
 	isChildItemSelected: boolean = false;
@@ -68,4 +71,22 @@ export class SuperMarketAppComponent implements OnInit {
 	{
 
 	}
+
+	confirmDialog(): void {
+    const message = "Are you sure you want to do this?";
+ 
+    const dialogData = new ConfirmDialogModel("Confirm Action", message);
+ 
+		const dialogRef = this.dialog.open(ConfirmDialogComponent, 
+		{
+      width: '450px',
+      height: '200px',
+      data: dialogData
+    });
+ 
+		dialogRef.afterClosed().subscribe(dialogResult => 
+		{
+      this.result = dialogResult;
+    });
+  }
 }
