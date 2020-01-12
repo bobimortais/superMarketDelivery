@@ -2,7 +2,6 @@ package com.smd.delivery.db;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import com.smd.delivery.entity.Customer;
 import com.smd.delivery.entity.Delivery;
 import com.smd.delivery.entity.DeliveryItem;
@@ -14,9 +13,6 @@ import org.hibernate.Transaction;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 
 
 public class DBAcessService

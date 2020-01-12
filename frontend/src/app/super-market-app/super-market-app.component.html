@@ -1,6 +1,22 @@
 <p align="center">
   Super Market APP - Under construction
 </p>
+<mat-toolbar color="primary">
+	<mat-toolbar-row>
+		<button mat-icon-button (click)="snav.toggle()">
+			<mat-icon>menu</mat-icon>
+		</button>
+		<button id="editButton" mat-icon-button>
+			<mat-icon>edit icon</mat-icon>
+		</button>
+		<button id="addButton" mat-icon-button>
+			<mat-icon>add icon</mat-icon>
+		</button>
+		<button id="removeButton" mat-icon-button> 
+			<mat-icon>remove icon</mat-icon>
+		</button>
+	</mat-toolbar-row>
+</mat-toolbar>
 <mat-expansion-panel>
   <mat-expansion-panel-header>
     <mat-panel-title>
@@ -21,9 +37,10 @@
 			<mat-panel-description>
 				Total Price: {{ delivery.totalPrice }}
 			</mat-panel-description>
-			</mat-expansion-panel-header>
+		</mat-expansion-panel-header>
 			<table style="width:100%">
 			<tr>
+				<mat-checkbox (change)="itemCheckBoxSelected()"></mat-checkbox>
 				<th align="left">Item Code</th>
 				<th align="left">Price</th>
 				<th align="left">Name</th>
@@ -32,6 +49,7 @@
 				<th align="left">Weight</th>
 			</tr>
 			<tr *ngFor="let item of delivery.items">
+				<th></th>
 				<td>{{ item.itemCode }}</td>
 				<td>{{ item.price }}</td>
 				<td>{{ item.name }}</td>

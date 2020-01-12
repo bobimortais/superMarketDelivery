@@ -15,6 +15,7 @@ export class SuperMarketAppComponent implements OnInit {
   
   constructor(private apiService: ApiCallService) { }
 
+	checked = false;
 
   ngOnInit() 
   {
@@ -43,5 +44,10 @@ export class SuperMarketAppComponent implements OnInit {
 	private totalPrice(val)
 	{
 		val.totalPrice = val.items.map(t => t.price).reduce((a, b) => a + b, 0).toFixed(2);
+	}
+
+	public itemCheckBoxSelected()
+	{
+		console.log("Item checkbox selected");
 	}
 }

@@ -1,10 +1,8 @@
 package com.smd.delivery.controller;
 
-import com.smd.delivery.db.DBAcessService;
 import com.smd.delivery.entity.Customer;
 import com.smd.delivery.entity.CustomerList;
 import com.smd.delivery.service.CustomerService;
-import com.smd.delivery.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
