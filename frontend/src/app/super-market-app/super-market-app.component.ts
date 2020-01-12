@@ -16,6 +16,7 @@ export class SuperMarketAppComponent implements OnInit {
   constructor(private apiService: ApiCallService) { }
 
 	checked = false;
+	isChildItemSelected: boolean = false;
 
   ngOnInit() 
   {
@@ -48,6 +49,23 @@ export class SuperMarketAppComponent implements OnInit {
 
 	public itemCheckBoxSelected()
 	{
+		let removeButton = document.getElementById("removeButton");
+		
+		if(!this.isChildItemSelected)
+		{
+			removeButton.disabled = false;
+			this.isChildItemSelected = true;
+		}
+		else
+		{
+			removeButton.disabled = true;
+			this.isChildItemSelected = false;
+		}
 		console.log("Item checkbox selected");
+	}
+
+	public deliveryCheckBoxSelected()
+	{
+
 	}
 }
