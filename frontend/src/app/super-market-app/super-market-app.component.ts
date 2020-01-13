@@ -52,7 +52,7 @@ export class SuperMarketAppComponent implements OnInit {
 
 	public itemCheckBoxSelected()
 	{
-		let removeButton = document.getElementById("removeButton");
+		let removeButton = document.getElementById("removeButton") as any;
 		
 		if(!this.isChildItemSelected)
 		{
@@ -80,13 +80,15 @@ export class SuperMarketAppComponent implements OnInit {
 		const dialogRef = this.dialog.open(ConfirmDialogComponent, 
 		{
       width: '450px',
-      height: '200px',
+			height: '200px',
+			hasBackdrop: false,
       data: dialogData
     });
  
 		dialogRef.afterClosed().subscribe(dialogResult => 
 		{
-      this.result = dialogResult;
+			this.result = dialogResult;
+			console.log("Result: " + this.result);
     });
   }
 }

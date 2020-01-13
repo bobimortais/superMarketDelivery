@@ -19,8 +19,7 @@ export class ConfirmDialogComponent implements OnInit{
   }
 
   ngOnInit() {
-    this.dialogRef.updatePosition({ top: `30px`,
-    right: `40px`});
+    //this.dialogRef.updatePosition({ top: `-300px`, right: `40px`});
   }
   
   onConfirm(): void 
