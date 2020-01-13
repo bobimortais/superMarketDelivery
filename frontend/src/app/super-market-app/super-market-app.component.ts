@@ -64,7 +64,6 @@ export class SuperMarketAppComponent implements OnInit {
 			removeButton.disabled = true;
 			this.isChildItemSelected = false;
 		}
-		console.log("Item checkbox selected");
 	}
 
 	public deliveryCheckBoxSelected()
@@ -73,15 +72,14 @@ export class SuperMarketAppComponent implements OnInit {
 	}
 
 	confirmDialog(): void {
-    const message = "Are you sure you want to do this?";
+    const message = "Do you want to remove the selected items?";
  
-    const dialogData = new ConfirmDialogModel("Confirm Action", message);
+    const dialogData = new ConfirmDialogModel("Confirm removal", message);
  
 		const dialogRef = this.dialog.open(ConfirmDialogComponent, 
 		{
       width: '450px',
 			height: '200px',
-			hasBackdrop: false,
       data: dialogData
     });
  
@@ -89,6 +87,16 @@ export class SuperMarketAppComponent implements OnInit {
 		{
 			this.result = dialogResult;
 			console.log("Result: " + this.result);
+
+			if(dialogResult)
+			{
+				this.handleItemRemoval();
+			}
     });
-  }
+	}
+	
+	handleItemRemoval()
+	{
+		this.openDeliveries.splice(0, 1);
+	}
 }
