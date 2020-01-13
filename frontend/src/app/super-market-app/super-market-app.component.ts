@@ -52,6 +52,8 @@ export class SuperMarketAppComponent implements OnInit {
 
 	public itemCheckBoxSelected()
 	{
+		var itemId = event.srcElement.parentElement.parentElement.parentElement.id;
+		console.log(itemId);
 		let removeButton = document.getElementById("removeButton") as any;
 		
 		if(!this.isChildItemSelected)
