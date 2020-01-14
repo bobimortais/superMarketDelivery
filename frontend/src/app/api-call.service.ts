@@ -11,4 +11,9 @@ export class ApiCallService {
   public getDeliveries(){
     return this.httpClient.get('http://localhost:8080/getDeliveries');
   }
+
+  public removeItemFromDelvery(itemId)
+  {
+    return this.httpClient.delete('http://localhost:8080/removeItemFromDelivery?itemId=' + itemId);
+  }
 }

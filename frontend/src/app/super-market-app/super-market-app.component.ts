@@ -14,12 +14,12 @@ export class SuperMarketAppComponent implements OnInit {
   public openDeliveries = [];
   public closedDeliveries = [];
 	public futureDeliveries = [];
-	result: string = '';
-  
-  constructor(private apiService: ApiCallService, public dialog: MatDialog) { }
-
+	public selectedItems = [];
 	checked = false;
 	isChildItemSelected: boolean = false;
+	
+  constructor(private apiService: ApiCallService, public dialog: MatDialog) { }
+
 
   ngOnInit() 
   {
@@ -55,7 +55,8 @@ export class SuperMarketAppComponent implements OnInit {
 		var itemId = event.srcElement.parentElement.parentElement.parentElement.id;
 		console.log(itemId);
 		let removeButton = document.getElementById("removeButton") as any;
-		
+		this.selectedItems.push(itemId);
+
 		if(!this.isChildItemSelected)
 		{
 			removeButton.disabled = false;
@@ -87,11 +88,10 @@ export class SuperMarketAppComponent implements OnInit {
  
 		dialogRef.afterClosed().subscribe(dialogResult => 
 		{
-			this.result = dialogResult;
-			console.log("Result: " + this.result);
-
+			console.log("dialogResult" + dialogResult);
 			if(dialogResult)
 			{
+				console.log("Entrou handleItemRemoval");
 				this.handleItemRemoval();
 			}
     });
@@ -99,6 +99,30 @@ export class SuperMarketAppComponent implements OnInit {
 	
 	handleItemRemoval()
 	{
-		this.openDeliveries.splice(0, 1);
+		let deliveryIndex = 0;
+		let indexToRemove = -1;
+
+		console.log("this.openDeliveries.length: " + this.openDeliveries.length);
+
+		for(let i = 0; i < this.openDeliveries.length; i++)
+		{
+			deliveryIndex = i;
+			indexToRemove = this.openDeliveries[i].items.findIndex(element => element.itemId == this.selectedItems[0]);
+			
+			if(indexToRemove != -1)
+				break;
+		}
+
+		console.log("deliveryIndex: " + deliveryIndex);
+			console.log("indexToRemove: " + indexToRemove);
+
+		if(indexToRemove != -1)
+		{
+			this.apiService.removeItemFromDelvery(this.selectedItems[0]).subscribe((data)=>
+	  	{
+				this.openDeliveries[deliveryIndex].splice(indexToRemove, 1);
+			});
+		}
 	}
+
 }
