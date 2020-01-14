@@ -29,7 +29,9 @@
   <mat-expansion-panel *ngFor="let delivery of openDeliveries">
 		<mat-expansion-panel-header>
 			<mat-panel-title>
-				<mat-checkbox id="{{ delivery.deliveryId }}">
+				<mat-checkbox id="{{ delivery.deliveryId }}" 
+					(click)="blockCollapse($event)"
+					(change)="deliverySelected()">
 					Delivery ID: {{ delivery.deliveryId }}
 				</mat-checkbox>
 			</mat-panel-title>
@@ -75,7 +77,11 @@
   <mat-expansion-panel *ngFor="let delivery of futureDeliveries">
 		<mat-expansion-panel-header>
 			<mat-panel-title>
-				Delivery ID: {{ delivery.deliveryId }}
+					<mat-checkbox id="{{ delivery.deliveryId }}" 
+					(click)="blockCollapse($event)"
+					(change)="deliverySelected()">
+					Delivery ID: {{ delivery.deliveryId }}
+				</mat-checkbox>
 			</mat-panel-title>
 			<mat-panel-description>
 				Cutomer Name: {{ delivery.customerName }}
@@ -119,7 +125,11 @@
 	<mat-expansion-panel *ngFor="let delivery of closedDeliveries">
 		<mat-expansion-panel-header>
 			<mat-panel-title>
-				Delivery ID: {{ delivery.deliveryId }}
+					<mat-checkbox id="{{ delivery.deliveryId }}" 
+					(click)="blockCollapse($event)"
+					(change)="deliverySelected()">
+					Delivery ID: {{ delivery.deliveryId }}
+				</mat-checkbox>
 			</mat-panel-title>
 			<mat-panel-description>
 				Cutomer Name: {{ delivery.customerName }}

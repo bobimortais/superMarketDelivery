@@ -128,5 +128,16 @@ export class SuperMarketAppComponent implements OnInit {
 			});
 	}
 	
+	blockCollapse(event: Event) {
+		event.stopPropagation();
+	}
+
+	public deliverySelected()
+	{
+		let editButton = document.getElementById("editButton") as any;
+		let addButton = document.getElementById("addButton") as any;
+		editButton.disabled = false;
+		addButton.disabled = false;
+	}
 
 }
