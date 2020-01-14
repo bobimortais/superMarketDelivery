@@ -54,7 +54,7 @@ public class DeliveryController
     public ResponseEntity<String> removeItemFromDelivery(@RequestParam(value="itemId", required = true) int itemId)
     {
         deliveryService.removeItemFromDelivery(itemId);
-        return new ResponseEntity<>("Remove item from delivery URL", HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @CrossOrigin

@@ -30,8 +30,6 @@ public class DeliveryItem
     @Column(name = "delivery_id")
     private int deliveryId;
 
-    private double weight;
-
     public int getItemCode()
     {
         return itemCode;
@@ -80,16 +78,6 @@ public class DeliveryItem
     public void setDescription(String description)
     {
         this.description = description;
-    }
-
-    public double getWeight()
-    {
-        return weight;
-    }
-
-    public void setWeight(double weight)
-    {
-        this.weight = weight;
     }
 
     public int getItemId()

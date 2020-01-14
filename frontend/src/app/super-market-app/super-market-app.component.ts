@@ -114,13 +114,13 @@ export class SuperMarketAppComponent implements OnInit {
 		}
 
 		console.log("deliveryIndex: " + deliveryIndex);
-			console.log("indexToRemove: " + indexToRemove);
+		console.log("indexToRemove: " + indexToRemove);
 
 		if(indexToRemove != -1)
 		{
 			this.apiService.removeItemFromDelvery(this.selectedItems[0]).subscribe((data)=>
 	  	{
-				this.openDeliveries[deliveryIndex].splice(indexToRemove, 1);
+				this.openDeliveries[deliveryIndex].items.splice(indexToRemove, 1);
 			});
 		}
 	}
