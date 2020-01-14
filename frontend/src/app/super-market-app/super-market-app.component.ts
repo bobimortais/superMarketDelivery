@@ -102,8 +102,6 @@ export class SuperMarketAppComponent implements OnInit {
 		let deliveryIndex = 0;
 		let indexToRemove = -1;
 
-		console.log("this.openDeliveries.length: " + this.openDeliveries.length);
-
 		for(let i = 0; i < this.openDeliveries.length; i++)
 		{
 			deliveryIndex = i;
@@ -113,16 +111,22 @@ export class SuperMarketAppComponent implements OnInit {
 				break;
 		}
 
-		console.log("deliveryIndex: " + deliveryIndex);
-		console.log("indexToRemove: " + indexToRemove);
-
 		if(indexToRemove != -1)
 		{
-			this.apiService.removeItemFromDelvery(this.selectedItems[0]).subscribe((data)=>
+			this.apiService.removeItemFromDelivery(this.selectedItems[0]).subscribe((data)=>
 	  	{
 				this.openDeliveries[deliveryIndex].items.splice(indexToRemove, 1);
 			});
 		}
 	}
+
+	handleItemAddition(itemToAdd)
+	{
+			this.apiService.addItemToDelivery(itemToAdd).subscribe((data)=>
+	  	{
+				this.openDeliveries[0].items.push(itemToAdd);
+			});
+	}
+	
 
 }

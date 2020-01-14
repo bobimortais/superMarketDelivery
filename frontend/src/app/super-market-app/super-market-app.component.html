@@ -29,7 +29,9 @@
   <mat-expansion-panel *ngFor="let delivery of openDeliveries">
 		<mat-expansion-panel-header>
 			<mat-panel-title>
-				Delivery ID: {{ delivery.deliveryId }}
+				<mat-checkbox id="{{ delivery.deliveryId }}">
+					Delivery ID: {{ delivery.deliveryId }}
+				</mat-checkbox>
 			</mat-panel-title>
 			<mat-panel-description>
 				Cutomer Name: {{ delivery.customerName }}
