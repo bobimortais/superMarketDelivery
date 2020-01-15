@@ -10,12 +10,14 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatIconModule} from '@angular/material/icon';
 import { MatButtonModule, MatDialogModule } from '@angular/material';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
+import { AddItemComponent } from './add-item/add-item.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SuperMarketAppComponent,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    AddItemComponent
   ],
   imports: [
     BrowserModule,
