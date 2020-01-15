@@ -141,7 +141,7 @@ export class SuperMarketAppComponent implements OnInit {
 			});
 	}
 	
-	blockCollapse(event: Event) 
+	blockCollapseOfDelivery(event: Event) 
 	{
 		event.stopPropagation();
 		let currentCheckedDelivery = (event.target as any).parentElement.parentElement.id;

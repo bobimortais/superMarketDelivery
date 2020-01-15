@@ -30,7 +30,7 @@
 		<mat-expansion-panel-header>
 			<mat-panel-title>
 				<mat-checkbox id="D{{ delivery.deliveryId }}" 
-					(click)="blockCollapse($event)"
+					(click)="blockCollapseOfDelivery($event)"
 					(change)="deliverySelected()">
 					Delivery ID: {{ delivery.deliveryId }}
 				</mat-checkbox>
@@ -78,7 +78,7 @@
 		<mat-expansion-panel-header>
 			<mat-panel-title>
 					<mat-checkbox id="D{{ delivery.deliveryId }}" 
-					(click)="blockCollapse($event)"
+					(click)="blockCollapseOfDelivery($event)"
 					(change)="deliverySelected()">
 					Delivery ID: {{ delivery.deliveryId }}
 				</mat-checkbox>
@@ -126,7 +126,7 @@
 		<mat-expansion-panel-header>
 			<mat-panel-title>
 					<mat-checkbox id="D{{ delivery.deliveryId }}" 
-					(click)="blockCollapse($event)"
+					(click)="blockCollapseOfDelivery($event)"
 					(change)="deliverySelected()">
 					Delivery ID: {{ delivery.deliveryId }}
 				</mat-checkbox>
