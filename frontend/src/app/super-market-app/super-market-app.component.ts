@@ -127,26 +127,48 @@ export class SuperMarketAppComponent implements OnInit {
 	{
 		let deliveryIndex = 0;
 		let indexToRemove = -1;
+		let allDeliveries = [];
+		allDeliveries = allDeliveries.concat(this.openDeliveries);
+		allDeliveries = allDeliveries.concat(this.futureDeliveries);
+		allDeliveries = allDeliveries.concat(this.closedDeliveries);
 
-		console.log("this.selectedItems[0] :" + this.selectedItems[0]);
-
-		for(let i = 0; i < this.openDeliveries.length; i++)
+		for(let i = 0; i < allDeliveries.length; i++)
 		{
 			deliveryIndex = i;
-			indexToRemove = this.openDeliveries[i].items.findIndex(element => element.itemId == this.selectedItems[0].itemId);
+			indexToRemove = allDeliveries[i].items.findIndex(element => element.itemId == this.selectedItems[0].itemId);
 			
 			if(indexToRemove != -1)
 				break;
 		}
 
-
-		console.log("indexToRemove :" + indexToRemove);
-
 		if(indexToRemove != -1)
 		{
 			this.apiService.removeItemFromDelivery(this.selectedItems[0].itemId).subscribe((data)=>
 	  		{
-				this.openDeliveries[deliveryIndex].items.splice(indexToRemove, 1);
+				let deliveryId = allDeliveries[deliveryIndex].deliveryId;
+				let deliveryStatus = allDeliveries[deliveryIndex].status;
+
+				console.log("deliveryId :" + deliveryId);
+				console.log("deliveryStatus :" + deliveryStatus);
+
+				if(deliveryStatus == 'Open')
+				{
+					deliveryIndex = this.openDeliveries.findIndex(element => element.deliveryId == deliveryId);
+					console.log("Delivery Index by status:" + deliveryIndex);
+					this.openDeliveries[deliveryIndex].items.splice(indexToRemove, 1);
+				}
+				else if(deliveryStatus == 'Closed')
+				{
+					deliveryIndex = this.closedDeliveries.findIndex(element => element.deliveryId == deliveryId);
+					this.closedDeliveries[deliveryIndex].items.splice(indexToRemove, 1);
+				}
+				else if(deliveryStatus == 'Future')
+				{
+					deliveryIndex = this.futureDeliveries.findIndex(element => element.deliveryId == deliveryId);
+					this.futureDeliveries[deliveryIndex].items.splice(indexToRemove, 1);
+				}
+
+				this.selectedItems.splice(0, 1);
 				this.removeButton.disabled = true;
 			});
 		}
