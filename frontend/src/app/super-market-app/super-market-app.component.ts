@@ -127,10 +127,7 @@ export class SuperMarketAppComponent implements OnInit {
 	{
 		let deliveryIndex = 0;
 		let indexToRemove = -1;
-		let allDeliveries = [];
-		allDeliveries = allDeliveries.concat(this.openDeliveries);
-		allDeliveries = allDeliveries.concat(this.futureDeliveries);
-		allDeliveries = allDeliveries.concat(this.closedDeliveries);
+		let allDeliveries = this.openDeliveries.concat(this.futureDeliveries).concat(this.closedDeliveries);
 
 		for(let i = 0; i < allDeliveries.length; i++)
 		{
@@ -148,13 +145,9 @@ export class SuperMarketAppComponent implements OnInit {
 				let deliveryId = allDeliveries[deliveryIndex].deliveryId;
 				let deliveryStatus = allDeliveries[deliveryIndex].status;
 
-				console.log("deliveryId :" + deliveryId);
-				console.log("deliveryStatus :" + deliveryStatus);
-
 				if(deliveryStatus == 'Open')
 				{
 					deliveryIndex = this.openDeliveries.findIndex(element => element.deliveryId == deliveryId);
-					console.log("Delivery Index by status:" + deliveryIndex);
 					this.openDeliveries[deliveryIndex].items.splice(indexToRemove, 1);
 				}
 				else if(deliveryStatus == 'Closed')
@@ -168,10 +161,15 @@ export class SuperMarketAppComponent implements OnInit {
 					this.futureDeliveries[deliveryIndex].items.splice(indexToRemove, 1);
 				}
 
-				this.selectedItems.splice(0, 1);
+				this.selectedItems.length = 0;
 				this.removeButton.disabled = true;
 			});
 		}
+	}
+
+	prepareDeleteItemBody()
+	{
+		let deleteJsonRequest;
 	}
 
 	handleItemAddition(itemToAdd)
