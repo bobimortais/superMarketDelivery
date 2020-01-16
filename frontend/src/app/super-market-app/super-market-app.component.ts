@@ -17,7 +17,6 @@ export class SuperMarketAppComponent implements OnInit {
   public selectedItems = [];
   selectedDelivery;
   checked = false;
-  isChildItemSelected: boolean = false;
   removeButton;
   editButton;
   addButton;
@@ -51,47 +50,67 @@ export class SuperMarketAppComponent implements OnInit {
 			}
 		}
 	  });
-  }
+	}
 
 	private totalPrice(val)
 	{
 		val.totalPrice = val.items.map(t => t.price).reduce((a, b) => a + b, 0).toFixed(2);
 	}
 
-	public itemCheckBoxSelected()
+	blockItemSelectionFromDifferentDeliveries(event: Event, item) 
 	{
-		var itemId = event.srcElement.parentElement.parentElement.parentElement.id;
-		console.log(itemId.replace("I", ""));
-		this.selectedItems.push(itemId.replace("I", ""));
+		console.log("item on click" + item);
+		let deliveryIndex = 0;
+		let indexToRemove = -1;
+		for(let i = 0; i < this.openDeliveries.length; i++)
+		{
+			deliveryIndex = i;
+			indexToRemove = this.openDeliveries[i].items.findIndex(element => element.itemId == this.selectedItems[0]);
+			
+			if(indexToRemove != -1)
+				break;
+		}
+	}
 
-		if(!this.isChildItemSelected)
+	public itemCheckBoxSelected(currentItemId, deliveryId)
+	{
+		let checked = (event.target as any).checked;
+		let indexToRemove = -1;
+
+		if(checked)
 		{
 			this.removeButton.disabled = false;
-			this.isChildItemSelected = true;
+			this.selectedItems.push(currentItemId);
 		}
 		else
 		{
-			this.removeButton.disabled = true;
-			this.isChildItemSelected = false;
+			indexToRemove = this.selectedItems.findIndex(itemId => itemId == currentItemId);
+
+			if(indexToRemove != -1)
+			{
+				this.selectedItems.splice(indexToRemove, 1);
+			}
+
+			console.log(this.selectedItems.length);
+			if(this.selectedItems.length == 0)
+			{
+				this.selectedItems = [];
+				this.removeButton.disabled = true;
+			}
 		}
 	}
 
-	public deliveryCheckBoxSelected()
+	confirmDialog(): void 
 	{
-
-	}
-
-	confirmDialog(): void {
-    const message = "Do you want to remove the selected items?";
- 
-    const dialogData = new ConfirmDialogModel("Confirm removal", message);
+    	const message = "Do you want to remove the selected items?";
+    	const dialogData = new ConfirmDialogModel("Confirm removal", message);
  
 		const dialogRef = this.dialog.open(ConfirmDialogComponent, 
 		{
-      width: '450px',
+      		width: '450px',
 			height: '200px',
-      data: dialogData
-    });
+      		data: dialogData
+    	});
  
 		dialogRef.afterClosed().subscribe(dialogResult => 
 		{
@@ -101,7 +120,7 @@ export class SuperMarketAppComponent implements OnInit {
 				console.log("Entrou handleItemRemoval");
 				this.handleItemRemoval();
 			}
-    });
+    	});
 	}
 	
 	handleItemRemoval()
@@ -135,16 +154,15 @@ export class SuperMarketAppComponent implements OnInit {
 
 	handleItemAddition(itemToAdd)
 	{
-			this.apiService.addItemToDelivery(itemToAdd).subscribe((data)=>
+		this.apiService.addItemToDelivery(itemToAdd).subscribe((data)=>
 	  	{
-				this.openDeliveries[0].items.push(itemToAdd);
-			});
+			this.openDeliveries[0].items.push(itemToAdd);
+		});
 	}
 	
-	blockCollapseOfDelivery(event: Event) 
+	blockCollapseOfDelivery(event: Event, currentCheckedDelivery) 
 	{
 		event.stopPropagation();
-		let currentCheckedDelivery = (event.target as any).parentElement.parentElement.id;
 
 		if(this.selectedDelivery != null && currentCheckedDelivery != this.selectedDelivery)
 		{
@@ -152,14 +170,13 @@ export class SuperMarketAppComponent implements OnInit {
 		}
 	}
 
-	public deliverySelected()
+	public deliverySelected(currentCheckedDelivery)
 	{
 		let checked = (event.target as any).checked;
-		let currentCheckedDelivery = event.srcElement.parentElement.parentElement.parentElement.id;
 
 		if(checked == true && this.selectedDelivery == null)
 		{
-			this.selectedDelivery = event.srcElement.parentElement.parentElement.parentElement.id;
+			this.selectedDelivery = currentCheckedDelivery;
 			this.editButton.disabled = false;
 			this.addButton.disabled = false;
 		}

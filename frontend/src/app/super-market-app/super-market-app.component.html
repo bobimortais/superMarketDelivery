@@ -30,8 +30,8 @@
 		<mat-expansion-panel-header>
 			<mat-panel-title>
 				<mat-checkbox id="D{{ delivery.deliveryId }}" 
-					(click)="blockCollapseOfDelivery($event)"
-					(change)="deliverySelected()">
+					(click)="blockCollapseOfDelivery($event, delivery.deliveryId)"
+					(change)="deliverySelected(delivery.deliveryId)">
 					Delivery ID: {{ delivery.deliveryId }}
 				</mat-checkbox>
 			</mat-panel-title>
@@ -53,7 +53,7 @@
 				<th align="left">Weight</th>
 			</tr>
 			<tr *ngFor="let item of delivery.items">
-				<mat-checkbox (change)="itemCheckBoxSelected()" id="I{{ item.itemId }}"></mat-checkbox>
+				<mat-checkbox (change)="itemCheckBoxSelected(item.itemId, item.deliveryId)" id="I{{ item.itemId }}"></mat-checkbox>
 				<td hidden>{{ item.deliveryId}}</td>
 				<td>{{ item.itemCode }}</td>
 				<td>{{ item.price }}</td>
@@ -78,8 +78,8 @@
 		<mat-expansion-panel-header>
 			<mat-panel-title>
 					<mat-checkbox id="D{{ delivery.deliveryId }}" 
-					(click)="blockCollapseOfDelivery($event)"
-					(change)="deliverySelected()">
+					(click)="blockCollapseOfDelivery($event, delivery.deliveryId)"
+					(change)="deliverySelected(delivery.deliveryId)">
 					Delivery ID: {{ delivery.deliveryId }}
 				</mat-checkbox>
 			</mat-panel-title>
@@ -101,7 +101,7 @@
 				<th align="left">Weight</th>
 			</tr>
 			<tr *ngFor="let item of delivery.items">
-				<mat-checkbox (change)="itemCheckBoxSelected()" id="I{{ item.itemId }}"></mat-checkbox>
+				<mat-checkbox (change)="itemCheckBoxSelected(item.itemId, item.deliveryId)" id="I{{ item.itemId }}"></mat-checkbox>
 				<td hidden>{{ item.deliveryId}}</td>
 				<td>{{ item.itemCode }}</td>
 				<td>{{ item.price }}</td>
@@ -126,8 +126,8 @@
 		<mat-expansion-panel-header>
 			<mat-panel-title>
 					<mat-checkbox id="D{{ delivery.deliveryId }}" 
-					(click)="blockCollapseOfDelivery($event)"
-					(change)="deliverySelected()">
+					(click)="blockCollapseOfDelivery($event, delivery.deliveryId)"
+					(change)="deliverySelected(delivery.deliveryId)">
 					Delivery ID: {{ delivery.deliveryId }}
 				</mat-checkbox>
 			</mat-panel-title>
@@ -149,7 +149,7 @@
 				<th align="left">Weight</th>
 			</tr>
 			<tr *ngFor="let item of delivery.items">
-				<mat-checkbox (change)="itemCheckBoxSelected()" id="I{{ item.itemId }}"></mat-checkbox>
+				<mat-checkbox (change)="itemCheckBoxSelected(item.itemId, item.deliveryId)" id="I{{ item.itemId }}"></mat-checkbox>
 				<td hidden>{{ item.deliveryId}}</td>
 				<td>{{ item.itemCode }}</td>
 				<td>{{ item.price }}</td>
