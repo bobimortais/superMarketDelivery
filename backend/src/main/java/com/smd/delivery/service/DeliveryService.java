@@ -1,11 +1,15 @@
 package com.smd.delivery.service;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.smd.delivery.db.DBAcessService;
 import com.smd.delivery.entity.Delivery;
 import com.smd.delivery.entity.DeliveryList;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class DeliveryService
@@ -50,6 +54,20 @@ public class DeliveryService
     public String removeItemFromDelivery(int itemId)
     {
         DBAcessService.geInstance().removeItemFromDelivery(itemId);
+        String status = "OK";
+        return status;
+    }
+
+    public String removeItemsFromDelivery(String itemsToRemove)
+    {
+        JsonObject itemsInfo = JsonParser.parseString(itemsToRemove).getAsJsonObject();
+        System.out.println(itemsInfo);
+        List<Integer> idsToRemove = new ArrayList<>();
+        JsonArray itemsArray = itemsInfo.get("items").getAsJsonArray();
+        for(int i = 0; i < itemsArray.size(); i++)
+        {
+            idsToRemove.add(itemsArray.getAsInt());
+        }
         String status = "OK";
         return status;
     }

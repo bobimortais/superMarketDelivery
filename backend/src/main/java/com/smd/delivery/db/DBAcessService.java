@@ -210,6 +210,34 @@ public class DBAcessService
 		return status;
 	}
 
+    public String removeItemsFromDelivery(int itemId)
+    {
+        Transaction tx = null;
+        Session session = getHibernateSession();
+        DeliveryItem deliveryItem = new DeliveryItem();
+
+        try
+        {
+            tx = session.beginTransaction();
+            deliveryItem.setItemId(itemId);
+            session.delete(deliveryItem);
+            tx.commit();
+        }
+        catch (HibernateException e)
+        {
+            if (tx != null)
+                tx.rollback();
+            e.printStackTrace();
+        }
+        finally
+        {
+            session.close();
+        }
+
+        String status = "OK";
+        return status;
+    }
+
     public List<Item> getAllItems()
     {
         Transaction tx = null;

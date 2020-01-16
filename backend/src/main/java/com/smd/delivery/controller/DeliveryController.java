@@ -58,6 +58,14 @@ public class DeliveryController
     }
 
     @CrossOrigin
+    @PostMapping(value = "/removeItemsFromDelivery")
+    public ResponseEntity<String> removeItemsFromDelivery(@RequestBody(required = true) String requestItems)
+    {
+        deliveryService.removeItemsFromDelivery(requestItems);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @CrossOrigin
     @DeleteMapping(value = "/cancelDelivery")
     public ResponseEntity<String> cancelDelivery(@RequestParam(value="deliveryId", required = true) int deliveryId)
     {

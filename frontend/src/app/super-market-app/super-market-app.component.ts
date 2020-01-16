@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ApiCallService } from '../api-call.service';
 import { MatDialog } from '@angular/material';
 import { ConfirmDialogModel, ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
+import { DeleteItemsRequest} from '../entity/DeleteItemsRequest';
 
 @Component({
   selector: 'app-super-market-app',
@@ -16,7 +17,6 @@ export class SuperMarketAppComponent implements OnInit {
   public futureDeliveries = [];
   public selectedItems = [];
   selectedDelivery;
-  checked = false;
   removeButton;
   editButton;
   addButton;
@@ -114,10 +114,8 @@ export class SuperMarketAppComponent implements OnInit {
  
 		dialogRef.afterClosed().subscribe(dialogResult => 
 		{
-			console.log("dialogResult" + dialogResult);
 			if(dialogResult)
 			{
-				console.log("Entrou handleItemRemoval");
 				this.handleItemRemoval();
 			}
     	});
@@ -140,11 +138,55 @@ export class SuperMarketAppComponent implements OnInit {
 
 		if(indexToRemove != -1)
 		{
-			this.apiService.removeItemFromDelivery(this.selectedItems[0].itemId).subscribe((data)=>
-	  		{
-				let deliveryId = allDeliveries[deliveryIndex].deliveryId;
-				let deliveryStatus = allDeliveries[deliveryIndex].status;
+			if(this.selectedItems.length == 1)
+			{
+				this.removeSingleItem(allDeliveries, deliveryIndex, indexToRemove);
+			}
+			else
+			{
+				this.removeSeveralItems(allDeliveries, deliveryIndex, indexToRemove);
+			}
+		}
+	}
 
+	removeSingleItem(allDeliveries, deliveryIndex, indexToRemove)
+	{
+		this.apiService.removeItemFromDelivery(this.selectedItems[0].itemId).subscribe((data)=>
+	  	{
+			let deliveryId = allDeliveries[deliveryIndex].deliveryId;
+			let deliveryStatus = allDeliveries[deliveryIndex].status;
+
+			if(deliveryStatus == 'Open')
+			{
+				deliveryIndex = this.openDeliveries.findIndex(element => element.deliveryId == deliveryId);
+				this.openDeliveries[deliveryIndex].items.splice(indexToRemove, 1);
+			}
+			else if(deliveryStatus == 'Closed')
+			{
+				deliveryIndex = this.closedDeliveries.findIndex(element => element.deliveryId == deliveryId);
+				this.closedDeliveries[deliveryIndex].items.splice(indexToRemove, 1);
+			}
+			else if(deliveryStatus == 'Future')
+			{
+				deliveryIndex = this.futureDeliveries.findIndex(element => element.deliveryId == deliveryId);
+				this.futureDeliveries[deliveryIndex].items.splice(indexToRemove, 1);
+			}
+
+			this.selectedItems.length = 0;
+			this.removeButton.disabled = true;
+		});
+	}
+
+	removeSeveralItems(allDeliveries, deliveryIndex, indexToRemove)
+	{
+		let itemsToDeleteRequest = this.prepareDeleteItemBody();
+		this.apiService.removeItemsFromDelivery(itemsToDeleteRequest).subscribe((data)=>
+	  	{
+			let deliveryId = allDeliveries[deliveryIndex].deliveryId;
+			let deliveryStatus = allDeliveries[deliveryIndex].status;
+
+			for(let item of itemsToDeleteRequest.items)
+			{
 				if(deliveryStatus == 'Open')
 				{
 					deliveryIndex = this.openDeliveries.findIndex(element => element.deliveryId == deliveryId);
@@ -160,16 +202,16 @@ export class SuperMarketAppComponent implements OnInit {
 					deliveryIndex = this.futureDeliveries.findIndex(element => element.deliveryId == deliveryId);
 					this.futureDeliveries[deliveryIndex].items.splice(indexToRemove, 1);
 				}
-
-				this.selectedItems.length = 0;
-				this.removeButton.disabled = true;
-			});
-		}
+			}
+			this.selectedItems.length = 0;
+			this.removeButton.disabled = true;
+		});
 	}
 
 	prepareDeleteItemBody()
 	{
-		let deleteJsonRequest;
+		let deleteJsonRequest = new DeleteItemsRequest(this.selectedItems);
+		return deleteJsonRequest;
 	}
 
 	handleItemAddition(itemToAdd)
