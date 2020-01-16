@@ -72,7 +72,7 @@ export class SuperMarketAppComponent implements OnInit {
 		}
 	}
 
-	public itemCheckBoxSelected(currentItemId, deliveryId)
+	public itemCheckBoxSelected(currentItem)
 	{
 		let checked = (event.target as any).checked;
 		let indexToRemove = -1;
@@ -80,11 +80,11 @@ export class SuperMarketAppComponent implements OnInit {
 		if(checked)
 		{
 			this.removeButton.disabled = false;
-			this.selectedItems.push(currentItemId);
+			this.selectedItems.push(currentItem);
 		}
 		else
 		{
-			indexToRemove = this.selectedItems.findIndex(itemId => itemId == currentItemId);
+			indexToRemove = this.selectedItems.findIndex(item => item.itemId == currentItem.itemId);
 
 			if(indexToRemove != -1)
 			{
@@ -133,7 +133,7 @@ export class SuperMarketAppComponent implements OnInit {
 		for(let i = 0; i < this.openDeliveries.length; i++)
 		{
 			deliveryIndex = i;
-			indexToRemove = this.openDeliveries[i].items.findIndex(element => element.itemId == this.selectedItems[0]);
+			indexToRemove = this.openDeliveries[i].items.findIndex(element => element.itemId == this.selectedItems[0].itemId);
 			
 			if(indexToRemove != -1)
 				break;
@@ -144,7 +144,7 @@ export class SuperMarketAppComponent implements OnInit {
 
 		if(indexToRemove != -1)
 		{
-			this.apiService.removeItemFromDelivery(this.selectedItems[0]).subscribe((data)=>
+			this.apiService.removeItemFromDelivery(this.selectedItems[0].itemId).subscribe((data)=>
 	  		{
 				this.openDeliveries[deliveryIndex].items.splice(indexToRemove, 1);
 				this.removeButton.disabled = true;
