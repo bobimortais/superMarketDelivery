@@ -66,8 +66,9 @@ public class DeliveryService
         JsonArray itemsArray = itemsInfo.get("items").getAsJsonArray();
         for(int i = 0; i < itemsArray.size(); i++)
         {
-            idsToRemove.add(itemsArray.getAsInt());
+            idsToRemove.add(itemsArray.get(i).getAsInt());
         }
+        DBAcessService.geInstance().removeItemsFromDelivery(idsToRemove);
         String status = "OK";
         return status;
     }

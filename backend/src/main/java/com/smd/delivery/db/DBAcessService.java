@@ -6,10 +6,7 @@ import com.smd.delivery.entity.Customer;
 import com.smd.delivery.entity.Delivery;
 import com.smd.delivery.entity.DeliveryItem;
 import com.smd.delivery.entity.Item;
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
+import org.hibernate.*;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
@@ -210,17 +207,17 @@ public class DBAcessService
 		return status;
 	}
 
-    public String removeItemsFromDelivery(int itemId)
+    public String removeItemsFromDelivery(List<Integer> idsToDelete)
     {
         Transaction tx = null;
         Session session = getHibernateSession();
-        DeliveryItem deliveryItem = new DeliveryItem();
 
         try
         {
             tx = session.beginTransaction();
-            deliveryItem.setItemId(itemId);
-            session.delete(deliveryItem);
+            Query query = session.createQuery("DELETE FROM delivery_item item WHERE item.itemId IN :ids");
+            query.setParameterList("ids", idsToDelete);
+            query.executeUpdate();
             tx.commit();
         }
         catch (HibernateException e)

@@ -90,8 +90,6 @@ export class SuperMarketAppComponent implements OnInit {
 			{
 				this.selectedItems.splice(indexToRemove, 1);
 			}
-
-			console.log(this.selectedItems.length);
 			if(this.selectedItems.length == 0)
 			{
 				this.selectedItems = [];
@@ -127,25 +125,22 @@ export class SuperMarketAppComponent implements OnInit {
 		let indexToRemove = -1;
 		let allDeliveries = this.openDeliveries.concat(this.futureDeliveries).concat(this.closedDeliveries);
 
-		for(let i = 0; i < allDeliveries.length; i++)
+		if(this.selectedItems.length == 1)
 		{
-			deliveryIndex = i;
-			indexToRemove = allDeliveries[i].items.findIndex(element => element.itemId == this.selectedItems[0].itemId);
-			
+			for(let i = 0; i < allDeliveries.length; i++)
+			{
+				deliveryIndex = i;
+				indexToRemove = allDeliveries[i].items.findIndex(element => element.itemId == this.selectedItems[0].itemId);
+				
+				if(indexToRemove != -1)
+					break;
+			}
 			if(indexToRemove != -1)
-				break;
-		}
-
-		if(indexToRemove != -1)
-		{
-			if(this.selectedItems.length == 1)
-			{
 				this.removeSingleItem(allDeliveries, deliveryIndex, indexToRemove);
-			}
-			else
-			{
-				this.removeSeveralItems(allDeliveries, deliveryIndex, indexToRemove);
-			}
+		}
+		else
+		{
+			this.removeSeveralItems(allDeliveries, deliveryIndex, indexToRemove);
 		}
 	}
 
