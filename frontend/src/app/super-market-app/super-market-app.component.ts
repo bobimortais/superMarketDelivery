@@ -3,6 +3,7 @@ import { ApiCallService } from '../api-call.service';
 import { MatDialog } from '@angular/material';
 import { ConfirmDialogModel, ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { DeleteItemsRequest} from '../entity/DeleteItemsRequest';
+import { element } from '@angular/core/src/render3/instructions';
 
 @Component({
   selector: 'app-super-market-app',
@@ -133,7 +134,7 @@ export class SuperMarketAppComponent implements OnInit {
 		}
 		else
 		{
-			this.removeSeveralItems(allDeliveries, deliveryIndex, indexToRemove);
+			this.removeSeveralItems();
 		}
 	}
 
@@ -165,30 +166,38 @@ export class SuperMarketAppComponent implements OnInit {
 		});
 	}
 
-	removeSeveralItems(allDeliveries, deliveryIndex, indexToRemove)
+	removeSeveralItems()
 	{
 		let itemsToDeleteRequest = this.prepareDeleteItemBody();
 		this.apiService.removeItemsFromDelivery(itemsToDeleteRequest).subscribe((data)=>
 	  	{
-			let deliveryId = allDeliveries[deliveryIndex].deliveryId;
-			let deliveryStatus = allDeliveries[deliveryIndex].status;
-
-			for(let item of itemsToDeleteRequest.items)
+			let allDeliveries = this.openDeliveries.concat(this.futureDeliveries).concat(this.closedDeliveries);
+			
+			for(let item of this.selectedItems)
 			{
+				let itemId = item.itemId;
+				let deliveryId = item.deliveryId;
+				let deliveryIndex = allDeliveries.findIndex(element => element.deliveryId == deliveryId);
+				let deliveryStatus = allDeliveries[deliveryIndex].status;
+				let itemIndex = 0;
+
 				if(deliveryStatus == 'Open')
 				{
 					deliveryIndex = this.openDeliveries.findIndex(element => element.deliveryId == deliveryId);
-					this.openDeliveries[deliveryIndex].items.splice(indexToRemove, 1);
+					itemIndex = this.openDeliveries[deliveryIndex].items.findIndex(element => element.itemId = itemId);
+					this.openDeliveries[deliveryIndex].items.splice(itemIndex, 1);
 				}
 				else if(deliveryStatus == 'Closed')
 				{
 					deliveryIndex = this.closedDeliveries.findIndex(element => element.deliveryId == deliveryId);
-					this.closedDeliveries[deliveryIndex].items.splice(indexToRemove, 1);
+					itemIndex = this.closedDeliveries[deliveryIndex].items.findIndex(element => element.itemId = itemId);
+					this.closedDeliveries[deliveryIndex].items.splice(itemIndex, 1);
 				}
 				else if(deliveryStatus == 'Future')
 				{
 					deliveryIndex = this.futureDeliveries.findIndex(element => element.deliveryId == deliveryId);
-					this.futureDeliveries[deliveryIndex].items.splice(indexToRemove, 1);
+					itemIndex = this.futureDeliveries[deliveryIndex].items.findIndex(element => element.itemId = itemId);
+					this.futureDeliveries[deliveryIndex].items.splice(itemIndex, 1);
 				}
 			}
 			this.selectedItems.length = 0;
