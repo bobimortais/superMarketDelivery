@@ -59,16 +59,9 @@ export class SuperMarketAppComponent implements OnInit {
 
 	blockItemSelectionFromDifferentDeliveries(event: Event, item) 
 	{
-		console.log("item on click" + item);
-		let deliveryIndex = 0;
-		let indexToRemove = -1;
-		for(let i = 0; i < this.openDeliveries.length; i++)
+		if(this.selectedItems.length > 0 && this.selectedItems[0].deliveryId != item.deliveryId)
 		{
-			deliveryIndex = i;
-			indexToRemove = this.openDeliveries[i].items.findIndex(element => element.itemId == this.selectedItems[0]);
-			
-			if(indexToRemove != -1)
-				break;
+			event.preventDefault();
 		}
 	}
 
