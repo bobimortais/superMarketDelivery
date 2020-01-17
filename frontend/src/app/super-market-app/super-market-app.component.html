@@ -9,11 +9,14 @@
 		<button id="editButton" mat-icon-button disabled>
 			<mat-icon>edit icon</mat-icon>
 		</button>
+		<button id="cancelButton" mat-icon-button disabled>
+			<mat-icon>cancel</mat-icon>
+		</button>
 		<button id="addButton" mat-icon-button disabled>
-			<mat-icon>add icon</mat-icon>
+			<mat-icon>add_shopping_cart</mat-icon>
 		</button>
 		<button id="removeButton" mat-icon-button disabled (click)="confirmDialog()"> 
-			<mat-icon>remove icon</mat-icon>
+			<mat-icon>remove_shopping_cart</mat-icon>
 		</button>
 	</mat-toolbar-row>
 </mat-toolbar>
@@ -57,7 +60,6 @@
 					(change)="itemCheckBoxSelected(item)" id="I{{ item.itemId }}"
 					(click)="blockItemSelectionFromDifferentDeliveries($event, item)">
 				</mat-checkbox>
-				<td hidden>{{ item.deliveryId}}</td>
 				<td>{{ item.itemCode }}</td>
 				<td>{{ item.price }}</td>
 				<td>{{ item.name }}</td>
@@ -108,7 +110,6 @@
 					(change)="itemCheckBoxSelected(item)" id="I{{ item.itemId }}"
 					(click)="blockItemSelectionFromDifferentDeliveries($event, item)">
 				</mat-checkbox>
-				<td hidden>{{ item.deliveryId}}</td>
 				<td>{{ item.itemCode }}</td>
 				<td>{{ item.price }}</td>
 				<td>{{ item.name }}</td>
@@ -159,7 +160,6 @@
 					(change)="itemCheckBoxSelected(item)" id="I{{ item.itemId }}"
 					(click)="blockItemSelectionFromDifferentDeliveries($event, item)">
 				</mat-checkbox>
-				<td hidden>{{ item.deliveryId}}</td>
 				<td>{{ item.itemCode }}</td>
 				<td>{{ item.price }}</td>
 				<td>{{ item.name }}</td>

@@ -3,7 +3,6 @@ import { ApiCallService } from '../api-call.service';
 import { MatDialog } from '@angular/material';
 import { ConfirmDialogModel, ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { DeleteItemsRequest} from '../entity/DeleteItemsRequest';
-import { element } from '@angular/core/src/render3/instructions';
 
 @Component({
   selector: 'app-super-market-app',
@@ -20,16 +19,18 @@ export class SuperMarketAppComponent implements OnInit {
   selectedDelivery;
   removeButton;
   editButton;
+  cancelButton;
   addButton;
 	
   constructor(private apiService: ApiCallService, public dialog: MatDialog) { }
 
 
-  ngOnInit() 
-  {
+  	ngOnInit() 
+  	{
 	  this.removeButton = document.getElementById("removeButton") as any;
 	  this.editButton = document.getElementById("editButton") as any;
 	  this.addButton = document.getElementById("addButton") as any;
+	  this.cancelButton = document.getElementById("cancelButton") as any;
 
 	  this.apiService.getDeliveries().subscribe((data)=>
 	  {
@@ -68,17 +69,14 @@ export class SuperMarketAppComponent implements OnInit {
 
 	public itemCheckBoxSelected(currentItem)
 	{
-		let checked = (event.target as any).checked;
-		let indexToRemove = -1;
-
-		if(checked)
+		if((event.target as any).checked)
 		{
 			this.removeButton.disabled = false;
 			this.selectedItems.push(currentItem);
 		}
 		else
 		{
-			indexToRemove = this.selectedItems.findIndex(item => item.itemId == currentItem.itemId);
+			let indexToRemove = this.selectedItems.findIndex(item => item.itemId == currentItem.itemId);
 
 			if(indexToRemove != -1)
 			{
@@ -107,20 +105,18 @@ export class SuperMarketAppComponent implements OnInit {
 		dialogRef.afterClosed().subscribe(dialogResult => 
 		{
 			if(dialogResult)
-			{
 				this.handleItemRemoval();
-			}
     	});
 	}
 	
 	handleItemRemoval()
 	{
-		let deliveryIndex = 0;
-		let indexToRemove = -1;
 		let allDeliveries = this.openDeliveries.concat(this.futureDeliveries).concat(this.closedDeliveries);
-
 		if(this.selectedItems.length == 1)
 		{
+			let deliveryIndex = 0;
+			let indexToRemove = -1;
+			
 			for(let i = 0; i < allDeliveries.length; i++)
 			{
 				deliveryIndex = i;
@@ -134,7 +130,7 @@ export class SuperMarketAppComponent implements OnInit {
 		}
 		else
 		{
-			this.removeSeveralItems();
+			this.removeSeveralItems(allDeliveries);
 		}
 	}
 
@@ -166,13 +162,11 @@ export class SuperMarketAppComponent implements OnInit {
 		});
 	}
 
-	removeSeveralItems()
+	removeSeveralItems(allDeliveries)
 	{
-		let itemsToDeleteRequest = this.prepareDeleteItemBody();
+		let itemsToDeleteRequest = new DeleteItemsRequest(this.selectedItems);
 		this.apiService.removeItemsFromDelivery(itemsToDeleteRequest).subscribe((data)=>
 	  	{
-			let allDeliveries = this.openDeliveries.concat(this.futureDeliveries).concat(this.closedDeliveries);
-			
 			for(let item of this.selectedItems)
 			{
 				let itemId = item.itemId;
@@ -204,20 +198,6 @@ export class SuperMarketAppComponent implements OnInit {
 			this.removeButton.disabled = true;
 		});
 	}
-
-	prepareDeleteItemBody()
-	{
-		let deleteJsonRequest = new DeleteItemsRequest(this.selectedItems);
-		return deleteJsonRequest;
-	}
-
-	handleItemAddition(itemToAdd)
-	{
-		this.apiService.addItemToDelivery(itemToAdd).subscribe((data)=>
-	  	{
-			this.openDeliveries[0].items.push(itemToAdd);
-		});
-	}
 	
 	blockCollapseOfDelivery(event: Event, currentCheckedDelivery) 
 	{
@@ -238,13 +218,23 @@ export class SuperMarketAppComponent implements OnInit {
 			this.selectedDelivery = currentCheckedDelivery;
 			this.editButton.disabled = false;
 			this.addButton.disabled = false;
+			this.cancelButton.disabled = false;
 		}
 		else if(checked == false && this.selectedDelivery == currentCheckedDelivery)
 		{
 			this.selectedDelivery = null;
 			this.editButton.disabled = true;
 			this.addButton.disabled = true;
+			this.cancelButton.disabled = true;
 		}
+	}
+
+	handleItemAddition(itemToAdd)
+	{
+		this.apiService.addItemToDelivery(itemToAdd).subscribe((data)=>
+	  	{
+			this.openDeliveries[0].items.push(itemToAdd);
+		});
 	}
 
 }
