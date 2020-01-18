@@ -3,6 +3,7 @@ import { ApiCallService } from '../api-call.service';
 import { MatDialog } from '@angular/material';
 import { ConfirmDialogModel, ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { DeleteItemsRequest} from '../entity/DeleteItemsRequest';
+import { AddItemComponent } from '../add-item/add-item.component';
 
 @Component({
   selector: 'app-super-market-app',
@@ -233,6 +234,11 @@ export class SuperMarketAppComponent implements OnInit {
 			this.addButton.disabled = true;
 			this.cancelButton.disabled = true;
 		}
+	}
+
+	openItemAdditionForm()
+	{
+		let addItemForm =  new AddItemComponent();
 	}
 
 	handleItemAddition(itemToAdd)
