@@ -145,16 +145,19 @@ export class SuperMarketAppComponent implements OnInit {
 			{
 				deliveryIndex = this.openDeliveries.findIndex(element => element.deliveryId == deliveryId);
 				this.openDeliveries[deliveryIndex].items.splice(indexToRemove, 1);
+				this.totalPrice(this.openDeliveries[deliveryIndex]);
 			}
 			else if(deliveryStatus == 'Closed')
 			{
 				deliveryIndex = this.closedDeliveries.findIndex(element => element.deliveryId == deliveryId);
 				this.closedDeliveries[deliveryIndex].items.splice(indexToRemove, 1);
+				this.totalPrice(this.closedDeliveries[deliveryIndex]);
 			}
 			else if(deliveryStatus == 'Future')
 			{
 				deliveryIndex = this.futureDeliveries.findIndex(element => element.deliveryId == deliveryId);
 				this.futureDeliveries[deliveryIndex].items.splice(indexToRemove, 1);
+				this.totalPrice(this.futureDeliveries[deliveryIndex]);
 			}
 
 			this.selectedItems.length = 0;
@@ -180,18 +183,21 @@ export class SuperMarketAppComponent implements OnInit {
 					deliveryIndex = this.openDeliveries.findIndex(element => element.deliveryId == deliveryId);
 					itemIndex = this.openDeliveries[deliveryIndex].items.findIndex(element => element.itemId = itemId);
 					this.openDeliveries[deliveryIndex].items.splice(itemIndex, 1);
+					this.totalPrice(this.openDeliveries[deliveryIndex]);
 				}
 				else if(deliveryStatus == 'Closed')
 				{
 					deliveryIndex = this.closedDeliveries.findIndex(element => element.deliveryId == deliveryId);
 					itemIndex = this.closedDeliveries[deliveryIndex].items.findIndex(element => element.itemId = itemId);
 					this.closedDeliveries[deliveryIndex].items.splice(itemIndex, 1);
+					this.totalPrice(this.closedDeliveries[deliveryIndex]);
 				}
 				else if(deliveryStatus == 'Future')
 				{
 					deliveryIndex = this.futureDeliveries.findIndex(element => element.deliveryId == deliveryId);
 					itemIndex = this.futureDeliveries[deliveryIndex].items.findIndex(element => element.itemId = itemId);
 					this.futureDeliveries[deliveryIndex].items.splice(itemIndex, 1);
+					this.totalPrice(this.futureDeliveries[deliveryIndex]);
 				}
 			}
 			this.selectedItems.length = 0;
