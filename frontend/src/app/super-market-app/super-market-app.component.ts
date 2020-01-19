@@ -3,7 +3,8 @@ import { ApiCallService } from '../api-call.service';
 import { MatDialog } from '@angular/material';
 import { ConfirmDialogModel, ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { DeleteItemsRequest} from '../entity/DeleteItemsRequest';
-import { AddItemComponent } from '../add-item/add-item.component';
+import { AddItemComponent, AddItemModel } from '../add-item/add-item.component';
+import { UpdateDeliveryComponent, UpdateDeliveryModel } from '../update-delivery/update-delivery.component';
 
 @Component({
   selector: 'app-super-market-app',
@@ -238,7 +239,37 @@ export class SuperMarketAppComponent implements OnInit {
 
 	openItemAdditionForm()
 	{
-		let addItemForm =  new AddItemComponent();
+		const dialogData = new AddItemModel(this.selectedDelivery);
+		const dialogRef = this.dialog.open(AddItemComponent, 
+		{
+		  width: '450px',
+		  height: '200px',
+		  data: dialogData
+		});
+	}
+
+	openUpdateDeliveryForm()
+	{
+		const dialogData = new UpdateDeliveryModel(this.selectedDelivery);
+		const dialogRef = this.dialog.open(UpdateDeliveryComponent, 
+		{
+		  width: '450px',
+		  height: '200px',
+		  data: dialogData
+		});
+	}
+
+	openCancelDeliveryForm()
+	{
+		const message = "Do you want to cancel delivery " + this.selectedDelivery + " ?";
+    	const dialogData = new ConfirmDialogModel("Confirm removal", message);
+ 
+		const dialogRef = this.dialog.open(ConfirmDialogComponent, 
+		{
+      		width: '450px',
+			height: '200px',
+      		data: dialogData
+    	});
 	}
 
 	handleItemAddition(itemToAdd)

@@ -11,13 +11,15 @@ import {MatIconModule} from '@angular/material/icon';
 import { MatButtonModule, MatDialogModule } from '@angular/material';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 import { AddItemComponent } from './add-item/add-item.component';
+import { UpdateDeliveryComponent } from './update-delivery/update-delivery.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SuperMarketAppComponent,
     ConfirmDialogComponent,
-    AddItemComponent
+    AddItemComponent,
+    UpdateDeliveryComponent
   ],
   imports: [
     BrowserModule,
@@ -32,7 +34,10 @@ import { AddItemComponent } from './add-item/add-item.component';
   MatDialogModule
   ],
   providers: [],
-  entryComponents: [ConfirmDialogComponent],
+  entryComponents: [
+    ConfirmDialogComponent, 
+    AddItemComponent,
+    UpdateDeliveryComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

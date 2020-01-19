@@ -6,13 +6,13 @@
 		<button mat-icon-button (click)="snav.toggle()" >
 			<mat-icon>menu</mat-icon>
 		</button>
-		<button id="editButton" mat-icon-button disabled>
+		<button id="editButton" mat-icon-button disabled (click)="openUpdateDeliveryForm()">
 			<mat-icon>edit icon</mat-icon>
 		</button>
-		<button id="cancelButton" mat-icon-button disabled>
+		<button id="cancelButton" mat-icon-button disabled (click)="openCancelDeliveryForm()">
 			<mat-icon>cancel</mat-icon>
 		</button>
-		<button id="addButton" mat-icon-button disabled>
+		<button id="addButton" mat-icon-button disabled (click)="openItemAdditionForm()">
 			<mat-icon>add_shopping_cart</mat-icon>
 		</button>
 		<button id="removeButton" mat-icon-button disabled (click)="confirmDialog()"> 

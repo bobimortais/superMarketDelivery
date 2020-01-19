@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { Component, OnInit, Inject } from '@angular/core';
 
 @Component({
   selector: 'app-add-item',
@@ -7,9 +8,24 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AddItemComponent implements OnInit {
 
-  constructor() { }
+  deliveryId: string;
 
-  ngOnInit() {
+  constructor(public dialogRef: MatDialogRef<AddItemComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: AddItemModel) {
+    // Update view with given values
+    this.deliveryId = data.deliveryId;
   }
 
+  ngOnInit() 
+  {
+  
+  }
+
+}
+
+export class AddItemModel {
+ 
+  constructor(public deliveryId: string) 
+  {
+  }
 }
