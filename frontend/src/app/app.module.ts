@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { SuperMarketAppComponent } from './super-market-app/super-market-app.component';
-import {MatExpansionModule, MatInputModule} from '@angular/material'
+import {MatExpansionModule, MatInputModule, MatSelectModule} from '@angular/material'
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import {MatCheckboxModule} from '@angular/material/checkbox';
@@ -31,7 +31,8 @@ import { UpdateDeliveryComponent } from './update-delivery/update-delivery.compo
   MatToolbarModule,
   MatIconModule,
   MatButtonModule,
-  MatDialogModule
+  MatDialogModule,
+  MatSelectModule
   ],
   providers: [],
   entryComponents: [

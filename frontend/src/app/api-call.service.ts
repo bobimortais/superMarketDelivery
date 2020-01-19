@@ -8,6 +8,10 @@ export class ApiCallService {
 
   constructor(private httpClient: HttpClient) { }
   
+  public getItems(){
+    return this.httpClient.get('http://localhost:8080/getItems');
+  }
+
   public getDeliveries(){
     return this.httpClient.get('http://localhost:8080/getDeliveries');
   }
