@@ -12,6 +12,8 @@ export class AddItemComponent implements OnInit {
 
   deliveryId: string;
 
+  itemAdded;
+
   constructor(private apiService: ApiCallService, public dialogRef: MatDialogRef<AddItemComponent>,
     @Inject(MAT_DIALOG_DATA) public data: AddItemModel) {
     // Update view with given values
@@ -34,6 +36,11 @@ export class AddItemComponent implements OnInit {
   
   }
 
+  addItem()
+  {
+    this.itemAdded = "ronaldo";
+    this.dialogRef.close(true);
+  }
 }
 
 export class AddItemModel {

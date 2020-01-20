@@ -124,6 +124,32 @@ public class DBAcessService
 		return delivery.getDeliveryId();
 	}
 
+    public String updateDelivery(Delivery delivery)
+    {
+        Transaction tx = null;
+        Session session = getHibernateSession();
+
+        try
+        {
+            tx = session.beginTransaction();
+            session.update(delivery);
+            tx.commit();
+        }
+        catch (HibernateException e)
+        {session.delete(delivery);
+            if (tx != null)
+                tx.rollback();
+            e.printStackTrace();
+        }
+        finally
+        {
+            session.close();
+        }
+
+        String status = "OK";
+        return status;
+    }
+
 	public String deleteDelivery(int deliveryId)
 	{
 		Transaction tx = null;

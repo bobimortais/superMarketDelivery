@@ -246,6 +246,11 @@ export class SuperMarketAppComponent implements OnInit {
 		  height: '200px',
 		  data: dialogData
 		});
+
+		dialogRef.afterClosed().subscribe(value => 
+		{
+			console.log(dialogRef.componentInstance.itemAdded);
+		});
 	}
 
 	openUpdateDeliveryForm()
@@ -269,7 +274,18 @@ export class SuperMarketAppComponent implements OnInit {
       		width: '450px',
 			height: '200px',
       		data: dialogData
-    	});
+		});
+		
+		dialogRef.afterClosed().subscribe(dialogResult => 
+		{
+			if(dialogResult)
+				this.handleCancelDelovery();
+		});
+	}
+
+	handleCancelDelovery()
+	{
+
 	}
 
 	handleItemAddition(itemToAdd)

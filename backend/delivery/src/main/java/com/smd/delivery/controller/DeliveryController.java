@@ -66,11 +66,19 @@ public class DeliveryController
     }
 
     @CrossOrigin
-    @DeleteMapping(value = "/cancelDelivery")
-    public ResponseEntity<String> cancelDelivery(@RequestParam(value="deliveryId", required = true) int deliveryId)
+    @DeleteMapping(value = "/deleteDelivery")
+    public ResponseEntity<String> deleteDelivery(@RequestParam(value="deliveryId", required = true) int deliveryId)
     {
         deliveryService.deleteDelivery(deliveryId);
         return new ResponseEntity<>("Cancel delivery URL", HttpStatus.OK);
+    }
+
+    @CrossOrigin
+    @PutMapping(value = "/updateDelivery")
+    public ResponseEntity<String> updateDelivery(@RequestBody(required = true)  String requestDelivery)
+    {
+        deliveryService.updateDelivery(requestDelivery);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
 

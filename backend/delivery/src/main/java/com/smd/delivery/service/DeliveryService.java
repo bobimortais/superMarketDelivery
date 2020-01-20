@@ -72,4 +72,13 @@ public class DeliveryService
         String status = "OK";
         return status;
     }
+
+    public String updateDelivery(String deliveryData)
+    {
+        JsonObject deliveryInfo = JsonParser.parseString(deliveryData).getAsJsonObject();
+        List<Integer> idsToRemove = new ArrayList<>();
+        DBAcessService.geInstance().updateDelivery(null);
+        String status = "OK";
+        return status;
+    }
 }
