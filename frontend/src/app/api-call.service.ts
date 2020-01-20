@@ -16,6 +16,11 @@ export class ApiCallService {
     return this.httpClient.get('http://localhost:8080/getDeliveries');
   }
 
+  public updateDelivery(deliveryInfo)
+  {
+    return this.httpClient.put('http://localhost:8080/updateDelivery', deliveryInfo);
+  }
+
   public removeItemFromDelivery(itemId)
   {
     return this.httpClient.delete('http://localhost:8080/removeItemFromDelivery?itemId=' + itemId);
@@ -28,6 +33,6 @@ export class ApiCallService {
 
   public addItemToDelivery(itemToAdd)
   {
-    return this.httpClient.post('http://localhost:8080/addItemToDelivery', itemToAdd);
+    return this.httpClient.put('/addItemToDelivery', itemToAdd);
   }
 }

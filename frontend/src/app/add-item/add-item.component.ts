@@ -38,7 +38,6 @@ export class AddItemComponent implements OnInit {
 
   addItem()
   {
-    this.itemAdded = "ronaldo";
     this.dialogRef.close(true);
   }
 }

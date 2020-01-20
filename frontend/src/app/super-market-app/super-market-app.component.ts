@@ -5,6 +5,7 @@ import { ConfirmDialogModel, ConfirmDialogComponent } from '../confirm-dialog/co
 import { DeleteItemsRequest} from '../entity/DeleteItemsRequest';
 import { AddItemComponent, AddItemModel } from '../add-item/add-item.component';
 import { UpdateDeliveryComponent, UpdateDeliveryModel } from '../update-delivery/update-delivery.component';
+import { DeliveryItem } from '../entity/DeliveryItem';
 
 @Component({
   selector: 'app-super-market-app',
@@ -211,7 +212,7 @@ export class SuperMarketAppComponent implements OnInit {
 	{
 		event.stopPropagation();
 
-		if(this.selectedDelivery != null && currentCheckedDelivery != this.selectedDelivery)
+		if(this.selectedDelivery != null && currentCheckedDelivery != this.selectedDelivery.deliveryId)
 		{
 			event.preventDefault();
 		}
@@ -228,7 +229,7 @@ export class SuperMarketAppComponent implements OnInit {
 			this.addButton.disabled = false;
 			this.cancelButton.disabled = false;
 		}
-		else if(checked == false && this.selectedDelivery == currentCheckedDelivery)
+		else if(checked == false && this.selectedDelivery.deliveryId == currentCheckedDelivery.deliveryId)
 		{
 			this.selectedDelivery = null;
 			this.editButton.disabled = true;
@@ -239,7 +240,7 @@ export class SuperMarketAppComponent implements OnInit {
 
 	openItemAdditionForm()
 	{
-		const dialogData = new AddItemModel(this.selectedDelivery);
+		const dialogData = new AddItemModel(this.selectedDelivery.deliveryId);
 		const dialogRef = this.dialog.open(AddItemComponent, 
 		{
 		  width: '450px',
@@ -247,15 +248,42 @@ export class SuperMarketAppComponent implements OnInit {
 		  data: dialogData
 		});
 
-		dialogRef.afterClosed().subscribe(value => 
+		dialogRef.afterClosed().subscribe(dialogResult => 
 		{
-			console.log(dialogRef.componentInstance.itemAdded);
+			if(dialogResult)
+				this.handleItemAddition(dialogRef.componentInstance.itemAdded);
+		});
+	}
+
+	handleItemAddition(itemId)
+	{
+		let itemToAdd = new DeliveryItem(itemId, this.selectedDelivery.deliveryId);
+		this.apiService.addItemToDelivery(itemToAdd).subscribe((data)=>
+	  	{
+			/**if(this.selectedDelivery.status == 'Open')
+			{
+				let deliveryIndex = this.openDeliveries.findIndex(element => element.deliveryId == this.selectedDelivery.deliveryId);
+				this.openDeliveries[deliveryIndex].items.push();
+				this.totalPrice(this.openDeliveries[deliveryIndex]);
+			}
+			else if(this.selectedDelivery.status == 'Closed')
+			{
+				let deliveryIndex = this.closedDeliveries.findIndex(element => element.deliveryId == this.selectedDelivery.deliveryId);
+				this.closedDeliveries[deliveryIndex].items.push();
+				this.totalPrice(this.closedDeliveries[deliveryIndex]);
+			}
+			else if(this.selectedDelivery.status == 'Future')
+			{
+				let deliveryIndex = this.futureDeliveries.findIndex(element => element.deliveryId == this.selectedDelivery.deliveryId);
+				this.futureDeliveries[deliveryIndex].items.push();
+				this.totalPrice(this.futureDeliveries[deliveryIndex]);
+			}*/
 		});
 	}
 
 	openUpdateDeliveryForm()
 	{
-		const dialogData = new UpdateDeliveryModel(this.selectedDelivery);
+		const dialogData = new UpdateDeliveryModel(this.selectedDelivery.deliveryId);
 		const dialogRef = this.dialog.open(UpdateDeliveryComponent, 
 		{
 		  width: '450px',
@@ -266,7 +294,7 @@ export class SuperMarketAppComponent implements OnInit {
 
 	openCancelDeliveryForm()
 	{
-		const message = "Do you want to cancel delivery " + this.selectedDelivery + " ?";
+		const message = "Do you want to cancel delivery " + this.selectedDelivery.deliveryId + " ?";
     	const dialogData = new ConfirmDialogModel("Confirm removal", message);
  
 		const dialogRef = this.dialog.open(ConfirmDialogComponent, 
@@ -279,21 +307,13 @@ export class SuperMarketAppComponent implements OnInit {
 		dialogRef.afterClosed().subscribe(dialogResult => 
 		{
 			if(dialogResult)
-				this.handleCancelDelovery();
+				this.handleCancelDelivery();
 		});
 	}
 
-	handleCancelDelovery()
+	handleCancelDelivery()
 	{
 
-	}
-
-	handleItemAddition(itemToAdd)
-	{
-		this.apiService.addItemToDelivery(itemToAdd).subscribe((data)=>
-	  	{
-			this.openDeliveries[0].items.push(itemToAdd);
-		});
 	}
 
 }

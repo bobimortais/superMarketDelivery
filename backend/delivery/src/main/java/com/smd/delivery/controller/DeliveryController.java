@@ -42,11 +42,11 @@ public class DeliveryController
     }
 
     @CrossOrigin
-    @PostMapping(value = "/addItemToDelivery", consumes = {"application/json"})
+    @PutMapping(value = "/addItemToDelivery", consumes = {"application/json"})
     public ResponseEntity<String> addItemToDelivery(@RequestBody(required = true) String itemToAddInfo)
     {
         deliveryService.addItemToDelivery(itemToAddInfo);
-        return new ResponseEntity<>("Add item to delivery URL", HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @CrossOrigin

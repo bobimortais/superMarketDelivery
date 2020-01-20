@@ -4,9 +4,9 @@
 <h4>Select item for addition</h4>
 <mat-form-field>
   <mat-label>Item to add</mat-label>
-  <mat-select>
+  <mat-select [(value)]="itemAdded">
     <mat-option *ngFor="let item of items" [value]="item.itemCode">
-      {{item.name}}
+      {{item.name}} {{ item.brand}}
     </mat-option>
   </mat-select>
 </mat-form-field>

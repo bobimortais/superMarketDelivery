@@ -44,6 +44,7 @@ public class DeliveryService
     public String addItemToDelivery(String itemToAddInfo)
     {
         JsonObject itemInfo = JsonParser.parseString(itemToAddInfo).getAsJsonObject();
+        System.out.println("Item to add:\n" + itemToAddInfo);
         int itemCode = itemInfo.get("itemCode").getAsInt();
         int deliveryId = itemInfo.get("deliveryId").getAsInt();
         DBAcessService.geInstance().addItemToDelivery(itemCode, deliveryId);
