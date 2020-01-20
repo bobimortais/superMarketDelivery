@@ -35,4 +35,9 @@ export class ApiCallService {
   {
     return this.httpClient.put('/addItemToDelivery', itemToAdd);
   }
+
+  public getItem(itemId)
+  {
+    return this.httpClient.get('http://localhost:8080/getItems/' + itemId);
+  }
 }
