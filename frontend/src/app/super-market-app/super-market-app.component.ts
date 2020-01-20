@@ -150,12 +150,6 @@ export class SuperMarketAppComponent implements OnInit {
 				this.openDeliveries[deliveryIndex].items.splice(indexToRemove, 1);
 				this.totalPrice(this.openDeliveries[deliveryIndex]);
 			}
-			else if(deliveryStatus == 'Closed')
-			{
-				deliveryIndex = this.closedDeliveries.findIndex(element => element.deliveryId == deliveryId);
-				this.closedDeliveries[deliveryIndex].items.splice(indexToRemove, 1);
-				this.totalPrice(this.closedDeliveries[deliveryIndex]);
-			}
 			else if(deliveryStatus == 'Future')
 			{
 				deliveryIndex = this.futureDeliveries.findIndex(element => element.deliveryId == deliveryId);
@@ -187,13 +181,6 @@ export class SuperMarketAppComponent implements OnInit {
 					itemIndex = this.openDeliveries[deliveryIndex].items.findIndex(element => element.itemId = itemId);
 					this.openDeliveries[deliveryIndex].items.splice(itemIndex, 1);
 					this.totalPrice(this.openDeliveries[deliveryIndex]);
-				}
-				else if(deliveryStatus == 'Closed')
-				{
-					deliveryIndex = this.closedDeliveries.findIndex(element => element.deliveryId == deliveryId);
-					itemIndex = this.closedDeliveries[deliveryIndex].items.findIndex(element => element.itemId = itemId);
-					this.closedDeliveries[deliveryIndex].items.splice(itemIndex, 1);
-					this.totalPrice(this.closedDeliveries[deliveryIndex]);
 				}
 				else if(deliveryStatus == 'Future')
 				{
@@ -262,22 +249,20 @@ export class SuperMarketAppComponent implements OnInit {
 	  	{
 			if(this.selectedDelivery.status == 'Open')
 			{
-				let deliveryIndex = this.openDeliveries.findIndex(element => element.deliveryId == this.selectedDelivery.deliveryId);
 				this.apiService.getItem(itemId).subscribe
 				((data) =>
 				{
-					this.openDeliveries[deliveryIndex].items.push(data);
-					this.totalPrice(this.openDeliveries[deliveryIndex]);
+					this.selectedDelivery.items.push(data);
+					this.totalPrice(this.selectedDelivery);
 				});
 			}
 			else if(this.selectedDelivery.status == 'Future')
 			{
-				let deliveryIndex = this.futureDeliveries.findIndex(element => element.deliveryId == this.selectedDelivery.deliveryId);
 				this.apiService.getItem(itemId).subscribe
 				((data) =>
 				{
-					this.futureDeliveries[deliveryIndex].items.push(data);
-					this.totalPrice(this.futureDeliveries[deliveryIndex]);
+					this.selectedDelivery.items.push(data);
+					this.totalPrice(this.selectedDelivery);
 				});
 			}
 		});
@@ -315,7 +300,22 @@ export class SuperMarketAppComponent implements OnInit {
 
 	handleCancelDelivery()
 	{
-
+		let deliveryOriginalStatus = this.selectedDelivery.status
+		this.selectedDelivery.status = "d";
+		this.apiService.updateDelivery(this.selectedDelivery).subscribe(()=> 
+		{
+			if(deliveryOriginalStatus == 'Open')
+			{
+				let deliveryIndex = this.openDeliveries.findIndex(element => element.deliveryId == this.selectedDelivery.deliveryId);
+				this.openDeliveries.splice(deliveryIndex, 1);
+			}
+			else if(deliveryOriginalStatus == 'Future')
+			{
+				let deliveryIndex = this.futureDeliveries.findIndex(element => element.deliveryId == this.selectedDelivery.deliveryId);
+				this.futureDeliveries.splice(deliveryIndex, 1);
+			}
+			this.selectedDelivery = null;
+		});
 	}
 
 }
