@@ -124,7 +124,7 @@ public class DBAcessService
 		return delivery.getDeliveryId();
 	}
 
-    public String updateDelivery(Delivery delivery)
+    public String updateDelivery(int deliveryId, int customerId, String deliveryStatus)
     {
         Transaction tx = null;
         Session session = getHibernateSession();
@@ -132,11 +132,18 @@ public class DBAcessService
         try
         {
             tx = session.beginTransaction();
-            session.update(delivery);
-            tx.commit();
+            Delivery delivery = (Delivery) session.get(Delivery.class, deliveryId);
+
+            if(delivery != null)
+            {
+                delivery.setStatus(deliveryStatus);
+                delivery.setCustomerId(customerId);
+                session.update(delivery);
+                tx.commit();
+            }
         }
         catch (HibernateException e)
-        {session.delete(delivery);
+        {
             if (tx != null)
                 tx.rollback();
             e.printStackTrace();

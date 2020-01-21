@@ -315,6 +315,10 @@ export class SuperMarketAppComponent implements OnInit {
 				this.futureDeliveries.splice(deliveryIndex, 1);
 			}
 			this.selectedDelivery = null;
+			this.editButton.disabled = true;
+			this.addButton.disabled = true;
+			this.cancelButton.disabled = true;
+			this.removeButton.disabled = true;
 		});
 	}
 

@@ -77,9 +77,11 @@ public class DeliveryService
     public String updateDelivery(String deliveryData)
     {
         JsonObject deliveryInfo = JsonParser.parseString(deliveryData).getAsJsonObject();
+        int deliveryId = deliveryInfo.get("deliveryId").getAsInt();
+        int customerId = deliveryInfo.get("customerId").getAsInt();
+        String deliveryStatus = deliveryInfo.get("status").getAsString();
         System.out.println(deliveryData);
-        List<Integer> idsToRemove = new ArrayList<>();
-        //DBAcessService.geInstance().updateDelivery(null);
+        DBAcessService.geInstance().updateDelivery(deliveryId, customerId, deliveryStatus);
         String status = "OK";
         return status;
     }
