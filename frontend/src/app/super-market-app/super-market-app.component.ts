@@ -270,7 +270,7 @@ export class SuperMarketAppComponent implements OnInit {
 
 	openUpdateDeliveryForm()
 	{
-		const dialogData = new UpdateDeliveryModel(this.selectedDelivery.deliveryId);
+		const dialogData = new UpdateDeliveryModel(this.selectedDelivery);
 		const dialogRef = this.dialog.open(UpdateDeliveryComponent, 
 		{
 		  width: '450px',
