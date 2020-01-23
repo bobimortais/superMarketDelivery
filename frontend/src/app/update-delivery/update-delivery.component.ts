@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
-import { Delivery } from '../entity/Delivery';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-update-delivery',
@@ -10,11 +10,14 @@ import { Delivery } from '../entity/Delivery';
 export class UpdateDeliveryComponent implements OnInit {
 
   delivery: any;
+  public defaultStatus;
 
   constructor(public dialogRef: MatDialogRef<UpdateDeliveryComponent>,
     @Inject(MAT_DIALOG_DATA) public data: UpdateDeliveryModel) 
     {
     this.delivery = data.delivery;
+    this.defaultStatus = data.delivery.status;
+    console.log(this.defaultStatus);
   }
 
   ngOnInit() 
@@ -28,5 +31,6 @@ export class UpdateDeliveryModel {
 
   constructor(public delivery: any) 
   {
+    
   }
 }

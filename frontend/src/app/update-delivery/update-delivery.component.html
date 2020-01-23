@@ -1,3 +1,4 @@
+<p>Update Delivery</p>
 <form>
     <mat-form-field>
       <mat-label>Delivery ID</mat-label>
@@ -16,7 +17,11 @@
 
     <mat-form-field>
       <mat-label>Status</mat-label>
-      <input matInput cdkTextareaAutosize value="{{ delivery.status }}">
+      <mat-select  [(value)]="defaultStatus">
+        <mat-option value="Open">Open</mat-option>
+        <mat-option value="Closed">Closed</mat-option>
+        <mat-option value="Future">Future</mat-option>
+      </mat-select>
     </mat-form-field>
     
     <button mat-raised-button>Update</button>
