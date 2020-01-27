@@ -25,6 +25,15 @@ export class UpdateDeliveryComponent implements OnInit {
   
   }
 
+  cancelUpdate(): void
+  {
+    this.dialogRef.close(true);
+  }
+
+  updateDelivery():void
+  {
+    this.dialogRef.close(true);
+  }
 }
 
 export class UpdateDeliveryModel {

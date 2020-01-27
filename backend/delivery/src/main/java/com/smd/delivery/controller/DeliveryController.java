@@ -18,7 +18,7 @@ import java.util.Date;
 
 @RestController
 @PropertySource("classpath:messages.properties")
-@Api(value = "Delivery API", description = "API to manage deliveries")
+@Api(value = "Delivery API")
 public class DeliveryController
 {
     private DeliveryService deliveryService;

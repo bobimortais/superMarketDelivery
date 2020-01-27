@@ -6,6 +6,7 @@ import { DeleteItemsRequest} from '../entity/DeleteItemsRequest';
 import { AddItemComponent, AddItemModel } from '../add-item/add-item.component';
 import { UpdateDeliveryComponent, UpdateDeliveryModel } from '../update-delivery/update-delivery.component';
 import { DeliveryItem } from '../entity/DeliveryItem';
+import { Delivery } from '../entity/Delivery';
 
 @Component({
   selector: 'app-super-market-app',
@@ -274,8 +275,14 @@ export class SuperMarketAppComponent implements OnInit {
 		const dialogRef = this.dialog.open(UpdateDeliveryComponent, 
 		{
 		  width: '450px',
-		  height: '200px',
+		  height: '270px',
 		  data: dialogData
+		});
+
+		dialogRef.afterClosed().subscribe(dialogResult => 
+		{
+			if(dialogResult)
+				console.log("Closed");
 		});
 	}
 
