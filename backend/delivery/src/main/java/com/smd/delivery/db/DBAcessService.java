@@ -185,7 +185,7 @@ public class DBAcessService
 		return status;
 	}
 
-	public int addItemToDelivery(int itemCode, int deliveryId)
+	public DeliveryItem addItemToDelivery(int itemCode, int deliveryId)
 	{
 		Transaction tx = null;
 		Session session = getHibernateSession();
@@ -209,7 +209,7 @@ public class DBAcessService
 		{
 			session.close();
 		}
-		return deliveryItem.getDeliveryId();
+		return deliveryItem;
 	}
 
 	public String removeItemFromDelivery(int itemId)

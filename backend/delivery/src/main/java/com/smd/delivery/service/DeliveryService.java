@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.smd.delivery.db.DBAcessService;
 import com.smd.delivery.entity.Delivery;
+import com.smd.delivery.entity.DeliveryItem;
 import com.smd.delivery.entity.DeliveryList;
 import org.springframework.stereotype.Service;
 
@@ -41,15 +42,14 @@ public class DeliveryService
         return status;
     }
 
-    public String addItemToDelivery(String itemToAddInfo)
+    public DeliveryItem addItemToDelivery(String itemToAddInfo)
     {
         JsonObject itemInfo = JsonParser.parseString(itemToAddInfo).getAsJsonObject();
         System.out.println("Item to add:\n" + itemToAddInfo);
         int itemCode = itemInfo.get("itemCode").getAsInt();
         int deliveryId = itemInfo.get("deliveryId").getAsInt();
-        DBAcessService.geInstance().addItemToDelivery(itemCode, deliveryId);
-        String status = "OK";
-        return status;
+        DeliveryItem deliveryItem = DBAcessService.geInstance().addItemToDelivery(itemCode, deliveryId);
+        return deliveryItem;
     }
 
     public String removeItemFromDelivery(int itemId)

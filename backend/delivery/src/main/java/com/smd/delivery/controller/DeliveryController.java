@@ -1,6 +1,7 @@
 package com.smd.delivery.controller;
 
 import com.smd.delivery.entity.Delivery;
+import com.smd.delivery.entity.DeliveryItem;
 import com.smd.delivery.entity.DeliveryList;
 import com.smd.delivery.error.ResponseError;
 import com.smd.delivery.service.DeliveryService;
@@ -62,10 +63,10 @@ public class DeliveryController
     @CrossOrigin
     @PutMapping(value = "/addItemToDelivery", consumes = {"application/json"})
     @ApiOperation(value = "Endpoint to add an item to a given delivery")
-    public ResponseEntity<String> addItemToDelivery(@RequestBody(required = true) String itemToAddInfo)
+    public ResponseEntity<DeliveryItem> addItemToDelivery(@RequestBody(required = true) String itemToAddInfo)
     {
         deliveryService.addItemToDelivery(itemToAddInfo);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<DeliveryItem>(deliveryService.addItemToDelivery(itemToAddInfo), HttpStatus.OK);
     }
 
     @CrossOrigin

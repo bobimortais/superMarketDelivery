@@ -6,7 +6,6 @@ import { DeleteItemsRequest} from '../entity/DeleteItemsRequest';
 import { AddItemComponent, AddItemModel } from '../add-item/add-item.component';
 import { UpdateDeliveryComponent, UpdateDeliveryModel } from '../update-delivery/update-delivery.component';
 import { DeliveryItem } from '../entity/DeliveryItem';
-import { Delivery } from '../entity/Delivery';
 
 @Component({
   selector: 'app-super-market-app',
@@ -248,6 +247,7 @@ export class SuperMarketAppComponent implements OnInit {
 		let itemToAdd = new DeliveryItem(itemId, this.selectedDelivery.deliveryId);
 		this.apiService.addItemToDelivery(itemToAdd).subscribe((data)=>
 	  	{
+			console.log(data);
 			if(this.selectedDelivery.status == 'Open')
 			{
 				this.apiService.getItem(itemId).subscribe
