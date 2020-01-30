@@ -9,26 +9,26 @@ export class ApiCallService {
   constructor(private httpClient: HttpClient) { }
   
   public getItems(){
-    return this.httpClient.get('http://localhost:8081/getItems');
+    return this.httpClient.get('/getItems');
   }
 
   public getDeliveries(){
-    return this.httpClient.get('http://localhost:8081/getDeliveries');
+    return this.httpClient.get('/getDeliveries');
   }
 
   public updateDelivery(deliveryInfo)
   {
-    return this.httpClient.put('http://localhost:8081/updateDelivery', deliveryInfo);
+    return this.httpClient.put('/updateDelivery', deliveryInfo);
   }
 
   public removeItemFromDelivery(itemId)
   {
-    return this.httpClient.delete('http://localhost:8081/removeItemFromDelivery?itemId=' + itemId);
+    return this.httpClient.delete('/removeItemFromDelivery?itemId=' + itemId);
   }
 
   public removeItemsFromDelivery(itemsInfo)
   {
-    return this.httpClient.post('http://localhost:8081/removeItemsFromDelivery', itemsInfo);
+    return this.httpClient.post('/removeItemsFromDelivery', itemsInfo);
   }
 
   public addItemToDelivery(itemToAdd)
@@ -38,6 +38,6 @@ export class ApiCallService {
 
   public getItem(itemId)
   {
-    return this.httpClient.get('http://localhost:8081/getItems/' + itemId);
+    return this.httpClient.get('/getItems/' + itemId);
   }
 }
