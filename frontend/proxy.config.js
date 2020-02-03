@@ -9,7 +9,7 @@ const proxy = [
     },
     {
       context: '/getItems',
-      target: 'http://localhost:8081'
+      target: 'http://localhost:8083'
     },
     {
       context: '/getDeliveries',
@@ -21,10 +21,6 @@ const proxy = [
     },
     {
       context: '/removeItemFromDelivery',
-      target: 'http://localhost:8081'
-    },
-    {
-      context: '/getItems',
       target: 'http://localhost:8081'
     },
   ];
